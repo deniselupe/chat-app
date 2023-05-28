@@ -11,7 +11,7 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={robotoCondensed.className}>
-      <body>{children}</body>
+      <body className="bg-seecho-green">{children}</body>
     </html>
   )
 }
