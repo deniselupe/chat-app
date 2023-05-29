@@ -14,7 +14,8 @@
       },
       colors: {
         'seecho': {
-          'green': '#2DC43D',
+          'darkgreen': '#124F3B',
+          'lightgreen': '#2DC43D',
           'gold': '#FFDAA7',
           'orange': '#FF9F1C',
           'darkblue': '#01040A',

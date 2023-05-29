@@ -1,4 +1,5 @@
 import React from 'react';
+import NavBar from './components/navbar';
 import './globals.css'
 import { Roboto_Condensed } from 'next/font/google'
 
@@ -11,7 +12,11 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={robotoCondensed.className}>
-      <body className="bg-seecho-green">{children}</body>
+      <body className="h-screen bg-no-repeat bg-gradient-to-br from-seecho-darkgreen to-seecho-lightgreen ">
+        <NavBar />
+        {children}
+      </body>
     </html>
   )
 }
+
