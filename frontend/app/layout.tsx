@@ -1,5 +1,5 @@
 import React from 'react';
-import NavBar from './components/navbar';
+import NavBar from '../components/navbar';
 import './globals.css'
 import { Roboto_Condensed } from 'next/font/google'
 
