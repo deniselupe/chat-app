@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import Logo from './svgs/seecho-logo.svg';
-import DiscordIcon from './svgs/discord-icon.svg';
-import TwitterIcon from './svgs/twitter-icon.svg';
-import SearchIcon from './svgs/search-icon.svg';
-import MenuIcon from'./svgs/menu-icon.svg';
+import Logo from '../svgs/seecho-logo.svg';
+import DiscordIcon from '../svgs/discord-icon.svg';
+import TwitterIcon from '../svgs/twitter-icon.svg';
+import SearchIcon from '../svgs/search-icon.svg';
+import MenuIcon from'../svgs/menu-icon.svg';
 
 export default function NavBar() {
     return (
