@@ -16,7 +16,7 @@
         'seecho': {
           'darkgreen': '#124F3B',
           'lightgreen': '#2DC43D',
-          'gold': '#FFDAA7',
+          'gold': '#FFBF69',
           'orange': '#FF9F1C',
           'darkblue': '#01040A',
           'lightblue': '#2EC4B6'
