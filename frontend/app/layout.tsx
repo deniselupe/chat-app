@@ -1,9 +1,10 @@
 import React from 'react';
 import NavBar from '../components/navbar';
 import './globals.css'
-import { Roboto_Condensed } from 'next/font/google'
+import { Outfit } from 'next/font/google'
 
-const robotoCondensed = Roboto_Condensed({ weight: ['300', '400', '700'], subsets: ['latin'] });
+const outfit = Outfit({ weight: ['300', '400', '700'], subsets: ['latin'] });
+const outfitClassName = outfit.className;
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -11,12 +12,11 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" className={robotoCondensed.className}>
-      <body className="tracking-wide h-screen bg-no-repeat bg-gradient-to-br from-seecho-darkgreen to-seecho-lightgreen ">
+    <html lang="en" className={`${outfitClassName} h-screen w-screen bg-gradient-to-br from-seecho-darkgreen to-seecho-lightgreen`}>
+      <body className="tracking-wide">
         <NavBar />
         {children}
       </body>
     </html>
   )
 }
-
