@@ -12,7 +12,7 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={robotoCondensed.className}>
-      <body className="h-screen bg-no-repeat bg-gradient-to-br from-seecho-darkgreen to-seecho-lightgreen ">
+      <body className="tracking-wide h-screen bg-no-repeat bg-gradient-to-br from-seecho-darkgreen to-seecho-lightgreen ">
         <NavBar />
         {children}
       </body>
