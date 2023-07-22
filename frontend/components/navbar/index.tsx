@@ -12,22 +12,22 @@ export default function NavBar() {
     const segment = useSelectedLayoutSegment();
 
     return (
-        <nav className="mx-60 my-8 flex justify-between min-w-[600px]">
-            <Link href="/">
-                <Logo className="w-64 h-14 text-seecho-gold hover:text-black" />
+        <nav className="w-fit mx-auto my-8 sm:w-3/4 sm:flex sm:justify-between">
+            <Link href="/" className="py-4 flex justify-center">
+                <Logo className="w-64 min-w-[256px] h-14 min-h-[56px] text-seecho-gold hover:text-black" />
             </Link>
-            <div className="w-1/2 flex justify-end items-end">
-                <DiscordIcon className="text-seecho-gold hover:text-black min-w-[40px] w-10 h-10 ml-7" />
-                <TwitterIcon className="text-seecho-gold hover:text-black min-w-[40px] w-10 h-10 ml-7" />
-                <SearchIcon className="text-seecho-gold hover:text-black min-w-[40px] w-10 h-10 ml-7" />
-                <MenuIcon className="text-seecho-gold hover:text-black min-w-[40px] w-10 h-10 ml-7" />
+            <div className="py-4 flex justify-center items-center">
+                <DiscordIcon className="text-seecho-gold hover:text-black w-8 h-8 sm:w-12 sm:h-12 mx-2" />
+                <TwitterIcon className="text-seecho-gold hover:text-black w-8 h-8 sm:w-12 sm:h-12 mx-2" />
+                <SearchIcon className="text-seecho-gold hover:text-black w-8 h-8 sm:w-12 sm:h-12 mx-2" />
+                <MenuIcon className="text-seecho-gold hover:text-black w-8 h-8 sm:w-12 sm:h-12 mx-2" />
                 {
                     segment === 'login'
                     ?
                     null
                     :
                     <Link href="/login">
-                        <p className="text-4xl font-medium text-seecho-gold hover:text-black ml-7">Login</p>
+                        <p className="text-4xl font-medium text-seecho-gold hover:text-black mx-2">Login</p>
                     </Link>
                 }
             </div>
