@@ -15,7 +15,7 @@ export default function HomePage() {
         />
         <p className="mb-10 text-5xl font-bold">THIS IS MY FRIEND, SEECHO.</p>
         <p className="text-2xl">He is sleeping right now, but there are a bunch more companions just like him that are looking for a friend.</p>
-        <button type="button" className="my-8 text-xl w-fit h-12 px-4 bg-seecho-orange rounded-md">
+        <button type="button" className="my-8 text-xl w-fit h-12 px-4 text-seecho-darkblue bg-seecho-orange hover:bg-seecho-lightblue rounded-md">
           <HeartIcon className="w-4 inline" />{' '}
           Join Waiting List
         </button>
