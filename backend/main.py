@@ -1,15 +1,29 @@
 import uvicorn
-from pydantic import BaseModel, SecretStr
-from fastapi import FastAPI, Response
+from tortoise.contrib.fastapi import register_tortoise
 from typing import Annotated
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from routes import auth, discord, website
+from utility.config import get_settings, Settings
 
 app = FastAPI(root_path="/api")
+
+settings: Annotated[Settings, None] = get_settings()
+register_tortoise(
+    app,
+    db_url=f"mysql://{settings.DB_USER}:{settings.DB_PW}@{settings.DOMAIN}:{settings.PORT}/{settings.DATABASE}",
+    modules={"models": ["utility.database.models"]},
+    generate_schemas=False,
+)
+
 
 origins = [
     "http://localhost:3000",
 ]
 
+app.include_router(auth.router)
+app.include_router(discord.router)
+app.include_router(website.router)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -17,19 +31,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-class UserDetails(BaseModel):
-    username: SecretStr
-    password: SecretStr
-
-
-@app.post("/auth")
-async def auth(
-    user_info: Annotated[UserDetails, "These are the user details!"], response: Response
-):
-    response.headers["X-Auth-Token"] = "TOKEN"
-    return 200
 
 
 if __name__ == "__main__":
