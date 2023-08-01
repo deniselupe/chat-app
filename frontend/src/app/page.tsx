@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import seechoFriend from '../public/assets/seecho.webp';
-import HeartIcon from '../public/svgs/heart-icon.svg';
+import seechoFriend from '@/public/assets/seecho.webp';
+import HeartIcon from '@/public/svgs/heart-icon.svg';
 
 export default function HomePage() {
   return (

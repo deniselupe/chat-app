@@ -1,11 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import Logo from '../../public/svgs/seecho-logo.svg';
-import DiscordIcon from '../../public/svgs/discord-icon.svg';
-import TwitterIcon from '../../public/svgs/twitter-icon.svg';
-import SearchIcon from '../../public/svgs/search-icon.svg';
-import MenuIcon from'../../public/svgs/menu-icon.svg';
+import Logo from '@/public/svgs/seecho-logo.svg';
+import DiscordIcon from '@/public/svgs/discord-icon.svg';
+import TwitterIcon from '@/public/svgs/twitter-icon.svg';
+import SearchIcon from '@/public/svgs/search-icon.svg';
+import MenuIcon from '@/public/svgs/menu-icon.svg';
 import { useSelectedLayoutSegment } from 'next/navigation';
 
 export default function NavBar() {
