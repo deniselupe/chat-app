@@ -9,6 +9,10 @@ class Settings(BaseSettings):
     DOMAIN: str = "DEFAULT"
     PORT: str = "3306"
     DATABASE: str = "DEFAULT"
+    GEN_SCHEMAS: bool = "True"
+    RELOAD: bool = "True"
+    UDS: str ="/tmp/uvicorn.sock"
+    PROXY_HEADERS: bool = "True"
 
     model_config = SettingsConfigDict(env_file=".env")
 

@@ -13,9 +13,8 @@ register_tortoise(
     app,
     db_url=f"mysql://{settings.DB_USER}:{settings.DB_PW}@{settings.DOMAIN}:{settings.PORT}/{settings.DATABASE}",
     modules={"models": ["utility.database.models"]},
-    generate_schemas=False,
+    generate_schemas=settings.GEN_SCHEMAS,
 )
-
 
 origins = [
     "http://localhost:3000",
@@ -32,6 +31,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 if __name__ == "__main__":
-    uvicorn.run("main:app", reload=True, uds="/tmp/uvicorn.sock", proxy_headers=True)
+    uvicorn.run(
+        "main:app",
+        reload=settings.RELOAD,
+        uds=settings.UDS,
+        proxy_headers=settings.PROXY_HEADERS,
+    )
