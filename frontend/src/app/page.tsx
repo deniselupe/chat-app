@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import seechoFriend from '@/public/assets/seecho.webp';
 import HeartIcon from '@/public/svgs/heart-icon.svg';
 import TempOne from '@/public/assets/homepage-temp1.webp';
@@ -83,6 +84,11 @@ export default function HomePage() {
             </p>
           </div>
         </div>
+      </section>
+      <section className="bg-seecho-darkblue w-screen py-32 text-center">
+        <h3 className="text-seecho-orange text-xs mb-12">GET IN TOUCH</h3>
+        <h1 className="text-seecho-orange text-7xl font-bold mb-8">Learn More</h1>
+        <button type="button" className="text-white text-2xl bg-seecho-lightblue hover:bg-seecho-orange w-1/3 h-16">Join The Discord</button>
       </section>
     </main>
   );
