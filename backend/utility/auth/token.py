@@ -19,10 +19,14 @@ async def encode_token(db_user, secret, secretphrase):
 
 
 async def verify_token(token, secret, secretphrase):
-    key = Key.new(version=4, purpose="local", key=bytes(secret, "utf-8"))
-    decoded = pyseto.decode(key, token)
 
-    payload = json.loads(decoded.payload)
+    try:
+        key = Key.new(version=4, purpose="local", key=bytes(secret, "utf-8"))
+        decoded = pyseto.decode(key, token)
+        payload = json.loads(decoded.payload)
+    except Exception:
+        return False
+
     try:
         assert payload["secretphrase"] == secretphrase
         return True
