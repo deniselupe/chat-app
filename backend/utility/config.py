@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     UDS: str ="/tmp/uvicorn.sock"
     PROXY_HEADERS: bool = "True"
 
-    model_config = SettingsConfigDict(env_file=".env")
+    model_config = SettingsConfigDict(env_file="../.env")
 
 @lru_cache()
 def get_settings():

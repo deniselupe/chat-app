@@ -31,6 +31,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/brew_coffee", status_code=418)
+async def brew_coffee():
+    return "I can't brew coffee because..."
+
 if __name__ == "__main__":
     uvicorn.run(
         "main:app",
