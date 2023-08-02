@@ -24,10 +24,6 @@ async def verify_token(token, secret, secretphrase):
 
     payload = json.loads(decoded.payload)
     try:
-        exp = (datetime.now(timezone.utc).astimezone().isoformat()) - (
-            datetime.strptime(payload["exp"], "%Y-%m-%dT%H:%M:%S.%f%z")
-        )
-        print(exp)
         assert payload["secretphrase"] == secretphrase
         return True
     except AssertionError:
