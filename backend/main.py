@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from routes import auth, discord, website
 from utility.config import get_settings, Settings
 
-app = FastAPI(root_path="/api")
+app = FastAPI(root_path="/dev")
 
 settings: Annotated[Settings, None] = get_settings()
 register_tortoise(
@@ -37,8 +37,13 @@ async def brew_coffee():
 
 if __name__ == "__main__":
     uvicorn.run(
+        # Core
         "main:app",
+
+        # Host
+        host="127.0.0.1",
+        port=8000,
+
+        # DEV Settings
         reload=settings.RELOAD,
-        uds=settings.UDS,
-        proxy_headers=settings.PROXY_HEADERS,
     )
