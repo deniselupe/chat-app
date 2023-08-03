@@ -3,14 +3,29 @@
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
+import { z } from 'zod';
+
+const LoginFormSchema = z.object({
+    email: z.string().email(),
+    password: z.string()
+});
+
+type LoginFormType = z.infer<typeof LoginFormSchema>;
 
 export default function LoginPage() {
-    const form = useForm();
-    const { register, control } = form;
+    const form = useForm<LoginFormType>();
+    const { register, control, handleSubmit } = form;
+
+    const onSubmit = (data: LoginFormType) => {
+        console.log('Login Form Submitted', data);
+    };
 
     return (
         <>
-            <form className="w-96 mx-auto sm:w-3/4 md:w-[550px] h-fit sm:mt-28 p-10 rounded-3xl flex flex-col items-center bg-seecho-darkblue shadow-xl">
+            <form 
+                className="w-96 mx-auto sm:w-3/4 md:w-[550px] h-fit sm:mt-28 p-10 rounded-3xl flex flex-col items-center bg-seecho-darkblue shadow-xl"
+                onSubmit={handleSubmit(onSubmit)}
+            >
                 <div className="w-full mb-8">
                     <h1 className="mb-2 text-5xl text-seecho-orange text-center">Welcome back!</h1>
                     <h2 className="text-center text-seecho-orange">We are so excited to see you again!</h2>
