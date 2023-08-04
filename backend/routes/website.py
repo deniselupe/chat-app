@@ -1,3 +1,4 @@
+import re
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 from typing import Annotated
@@ -15,8 +16,21 @@ router = APIRouter(
 
 @router.post("/create_user")
 async def create_user(user_info: Annotated[UserWebInbound, None]):
+    if (
+        re.match(
+            "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$",
+            user_info.password.get_secret_value(),
+        )
+        is None
+    ):
+        return JSONResponse(content={"message": "invalid credentials"}, status_code=400)
+
     db_outcome = await UserDetails.get_or_create(
-        defaults={"password": await EncryptionUtil.hash_password(user_info.password)},
+        defaults={
+            "password": await EncryptionUtil.hash_password(
+                user_info.password.get_secret_value()
+            )
+        },
         email=user_info.email,
     )
     if db_outcome[1] is True:
