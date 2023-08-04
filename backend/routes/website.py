@@ -7,6 +7,7 @@ from utility.pydantic.models import UserWebInbound
 from utility.database.models import UserDetails
 from utility.utility import AuthUtil, EncryptionUtil
 from utility.config import get_settings, Settings
+from datetime import datetime
 
 router = APIRouter(
     prefix="/web",
@@ -47,13 +48,14 @@ async def login_user(
     try:
         db_outcome = await UserDetails.get(email=user_info.email)
         verified_bool = await EncryptionUtil.verify_password(
-            db_outcome.password, user_info.password
+            db_outcome.password, user_info.password.get_secret_value()
         )
         if verified_bool is False:
             return JSONResponse(
                 content={"message": "invalid credentials"}, status_code=400
             )
         elif verified_bool is True:
+            await db_outcome.update_from_dict({"last_login": datetime.now()}).save()
             token = await AuthUtil.encode_token(
                 db_outcome, settings.TOKEN_SECRET_LOCAL, settings.TOKEN_SECRETPHRASE
             )
