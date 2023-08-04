@@ -21,4 +21,4 @@ async def auth_token(
     if payload is True:
         return JSONResponse(content={"message": "valid"}, status_code=200)
     elif payload is False:
-        return JSONResponse(content={"message": "invalid"}, status_code=200)
+        return JSONResponse(content={"message": "invalid"}, status_code=401)

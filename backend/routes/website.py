@@ -37,7 +37,7 @@ async def login_user(
         )
         if verified_bool is False:
             return JSONResponse(
-                content={"message": "invalid credentials"}, status_code=200
+                content={"message": "invalid credentials"}, status_code=400
             )
         elif verified_bool is True:
             token = await AuthUtil.encode_token(
@@ -49,4 +49,4 @@ async def login_user(
                 status_code=200,
             )
     except DoesNotExist:
-        return JSONResponse(content={"message": "invalid credentials"}, status_code=200)
+        return JSONResponse(content={"message": "invalid credentials"}, status_code=400)
