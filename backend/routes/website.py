@@ -15,16 +15,14 @@ router = APIRouter(
 
 @router.post("/create_user")
 async def create_user(user_info: Annotated[UserWebInbound, None]):
-    hashed_pw = await EncryptionUtil.hash_password(user_info.password)
-
     db_outcome = await UserDetails.get_or_create(
-        defaults={"password": hashed_pw},
+        defaults={"password": await EncryptionUtil.hash_password(user_info.password)},
         email=user_info.email,
     )
     if db_outcome[1] is True:
         return JSONResponse(content={"message": "user created"}, status_code=201)
     elif db_outcome[1] is False:
-        return JSONResponse(content={"message": "user exist"}, status_code=200)
+        return JSONResponse(content={"message": "user exist"}, status_code=400)
 
 
 @router.post("/login_user")
@@ -37,17 +35,18 @@ async def login_user(
         verified_bool = await EncryptionUtil.verify_password(
             db_outcome.password, user_info.password
         )
+        if verified_bool is False:
+            return JSONResponse(
+                content={"message": "invalid credentials"}, status_code=200
+            )
+        elif verified_bool is True:
+            token = await AuthUtil.encode_token(
+                db_outcome, settings.TOKEN_SECRET_LOCAL, settings.TOKEN_SECRETPHRASE
+            )
+            return JSONResponse(
+                content={"message": "token provided"},
+                headers={"x-auth-token": token},
+                status_code=200,
+            )
     except DoesNotExist:
         return JSONResponse(content={"message": "invalid credentials"}, status_code=200)
-
-    if verified_bool is False:
-        return JSONResponse(content={"message": "invalid credentials"}, status_code=200)
-    elif verified_bool is True:
-        token = await AuthUtil.encode_token(
-            db_outcome, settings.TOKEN_SECRET_LOCAL, settings.TOKEN_SECRETPHRASE
-        )
-        return JSONResponse(
-            content={"message": "token provided"},
-            headers={"x-auth-token": token},
-            status_code=200,
-        )
