@@ -13,40 +13,54 @@ const LoginFormSchema = z.object({
 type LoginFormType = z.infer<typeof LoginFormSchema>;
 
 export default function LoginPage() {
-    const form = useForm<LoginFormType>();
-    const { register, control, handleSubmit } = form;
+    const form = useForm<LoginFormType>({shouldFocusError: false});
+    const { register, control, handleSubmit, formState } = form;
+    const { errors } = formState;
 
     const onSubmit = (data: LoginFormType) => {
         console.log('Login Form Submitted', data);
     };
 
     return (
-        <>
+        <main>
             <form 
-                className="w-96 mx-auto sm:w-3/4 md:w-[550px] h-fit sm:mt-28 p-10 rounded-3xl flex flex-col items-center bg-seecho-darkblue shadow-xl"
+                className="mx-auto w-[370px] md:w-[400px] h-fit sm:mt-28 p-10 rounded-3xl flex flex-col items-center bg-seecho-darkblue shadow-xl"
                 onSubmit={handleSubmit(onSubmit)}
+                noValidate
             >
                 <div className="w-full mb-8">
                     <h1 className="mb-2 text-5xl text-seecho-orange text-center">Welcome back!</h1>
                     <h2 className="text-center text-seecho-orange">We are so excited to see you again!</h2>
                 </div>
-                <div className="w-full mb-6">
+                <div className="w-full mb-4">
                     <input 
-                        className="w-full px-4 leading-10 tracking-wider text-1xl text-seecho-gold bg-neutral-800 outline-none focus:outline-seecho-lightblue rounded-lg" 
+                        className={`w-full px-4 leading-10 tracking-wider text-1xl text-seecho-gold bg-neutral-800 outline-none ${errors.email?.message && 'outline-red-500'} focus:outline-seecho-lightblue rounded-lg`}
                         type="email"
                         id="email"
                         placeholder="Email Address"
-                        {...register("email")}
+                        {...register("email", {
+                            required: {
+                                value: true,
+                                message: 'Please enter email address'
+                            }
+                        })}
                     />
+                    <p className="text-red-500 mt-2">{errors.email?.message}</p>
                 </div>
                 <div className="w-full mb-2">
                     <input 
-                        className="w-full px-4 leading-10 tracking-wider text-1xl text-seecho-gold bg-neutral-800 outline-none focus:outline-seecho-lightblue rounded-lg"
+                        className={`w-full px-4 leading-10 tracking-wider text-1xl text-seecho-gold bg-neutral-800 outline-none ${errors.password?.message && 'outline-red-500'} focus:outline-seecho-lightblue rounded-lg`}
                         type="text"
                         id="password"
-                        placeholder="Confirm Password"
-                        {...register("password")}
+                        placeholder="Password"
+                        {...register("password", {
+                            required: {
+                                value: true,
+                                message: 'Please enter password'
+                            }
+                        })}
                     />
+                    <p className="text-red-500 mt-2">{errors.password?.message}</p>
                 </div>
                 <Link href="#" className="w-full mb-10">
                     <p className="text-seecho-lightblue hover:underline">Forgot your password?</p>
@@ -62,6 +76,6 @@ export default function LoginPage() {
                 </div>
             </form>
             <DevTool control={control} />
-        </>
+        </main>
     );
 }

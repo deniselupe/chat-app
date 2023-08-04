@@ -16,7 +16,7 @@ const SignupFormSchema = z.object({
 type SignupFormType = z.infer<typeof SignupFormSchema>;
 
 export default function LoginPage() {
-    const form = useForm<SignupFormType>();
+    const form = useForm<SignupFormType>({shouldFocusError: false});
     const { register, control, handleSubmit, formState } = form;
     const { errors } = formState;
 
@@ -27,44 +27,16 @@ export default function LoginPage() {
     return (
         <>
             <form 
-                className="w-96 mx-auto sm:w-3/4 md:w-[550px] h-fit sm:mt-28 p-10 rounded-3xl flex flex-col items-center bg-seecho-darkblue shadow-xl"
+                className="mx-auto w-[370px] md:w-[400px] h-fit sm:mt-28 p-10 rounded-3xl flex flex-col items-center bg-seecho-darkblue shadow-xl"
                 onSubmit={handleSubmit(onSubmit)}
                 noValidate
             >
                 <div className="w-full mb-8">
                     <h1 className="text-5xl text-seecho-orange text-center">Get Started</h1>
                 </div>
-                <div className="w-full mb-6 flex justify-between">
+                <div className="w-full mb-4">
                     <input 
-                        className={`w-full mr-2 px-4 leading-10 tracking-wider text-1xl text-seecho-gold bg-neutral-800 outline-none ${errors.first_name?.message && 'outline-red-500'} focus:outline-seecho-lightblue rounded-lg`}
-                        type="text"
-                        id="first_name"
-                        placeholder="First Name"
-                        {...register("first_name", {
-                            required: {
-                                value: true,
-                                message: "Please enter your first name"
-                            }
-                        })}
-                    />
-                    <p className="text-red-500 text-xs">{errors.first_name?.message}</p>
-                    <input 
-                        className={`w-full ml-2 px-4 leading-10 tracking-wider text-1xl text-seecho-gold bg-neutral-800 outline-none ${errors.first_name?.message && 'outline-red-500'} focus:outline-seecho-lightblue rounded-lg`}
-                        type="text"
-                        id="last_name"
-                        placeholder="Last Name"
-                        {...register("last_name", {
-                            required: {
-                                value: true,
-                                message: "Please enter your last name"
-                            }
-                        })}
-                    />
-                    <p className="text-red-500">{errors.last_name?.message}</p>
-                </div>
-                <div className="w-full mb-6">
-                    <input 
-                        className={`w-full px-4 leading-10 tracking-wider text-1xl text-seecho-gold bg-neutral-800 outline-none ${errors.first_name?.message && 'outline-red-500'} focus:outline-seecho-lightblue rounded-lg`}
+                        className={`w-full px-4 leading-10 tracking-wider text-1xl text-seecho-gold bg-neutral-800 outline-none ${errors.email?.message && 'outline-red-500'} focus:outline-seecho-lightblue rounded-lg`}
                         type="email"
                         id="email"
                         placeholder="Email Address"
@@ -75,11 +47,11 @@ export default function LoginPage() {
                             }
                         })}
                     />
-                    <p className="text-red-500">{errors.email?.message}</p>
+                    <p className="text-red-500 mt-2">{errors.email?.message}</p>
                 </div>
-                <div className="w-full mb-6">
+                <div className="w-full mb-10">
                     <input 
-                        className={`w-full px-4 leading-10 tracking-wider text-1xl text-seecho-gold bg-neutral-800 outline-none ${errors.first_name?.message && 'outline-red-500'} focus:outline-seecho-lightblue rounded-lg`}
+                        className={`w-full px-4 leading-10 tracking-wider text-1xl text-seecho-gold bg-neutral-800 outline-none ${errors.password?.message && 'outline-red-500'} focus:outline-seecho-lightblue rounded-lg`}
                         type="text"
                         id="password"
                         placeholder="Create Password"
@@ -90,22 +62,7 @@ export default function LoginPage() {
                             }
                         })}
                     />
-                    <p className="text-red-500">{errors.password?.message}</p>
-                </div>
-                <div className="w-full mb-10">
-                    <input 
-                        className={`w-full px-4 leading-10 tracking-wider text-1xl text-seecho-gold bg-neutral-800 outline-none ${errors.first_name?.message && 'outline-red-500'} focus:outline-seecho-lightblue rounded-lg`}
-                        type="text"
-                        id="confirm_password"
-                        placeholder="Confirm Password"
-                        {...register("confirm_password", {
-                            required: {
-                                value: true,
-                                message: 'Please confirm your password'
-                            }
-                        })}
-                    />
-                    <p className="text-red-500">{errors.confirm_password?.message}</p>
+                    <p className="text-red-500 mt-2">{errors.password?.message}</p>
                 </div>
                 <button className="w-full mb-4 leading-10 tracking-wider text-2xl text-seecho-darkblue bg-seecho-orange hover:bg-seecho-lightblue rounded-lg">Create Account</button>
                 <p className="w-full inline-flex text-seecho-orange">Already have an account? 
