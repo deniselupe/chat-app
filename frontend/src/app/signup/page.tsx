@@ -47,7 +47,7 @@ export default function LoginPage() {
                             }
                         })}
                     />
-                    <p className="text-red-500 mt-2">{errors.email?.message}</p>
+                    <p className="text-red-500 text-xs mt-2">{errors.email?.message}</p>
                 </div>
                 <div className="w-full mb-10">
                     <input 
@@ -62,7 +62,7 @@ export default function LoginPage() {
                             }
                         })}
                     />
-                    <p className="text-red-500 mt-2">{errors.password?.message}</p>
+                    <p className="text-red-500 text-xs mt-2">{errors.password?.message}</p>
                 </div>
                 <button className="w-full mb-4 leading-10 tracking-wider text-2xl text-seecho-darkblue bg-seecho-orange hover:bg-seecho-lightblue rounded-lg">Create Account</button>
                 <p className="w-full inline-flex text-seecho-orange">Already have an account? 

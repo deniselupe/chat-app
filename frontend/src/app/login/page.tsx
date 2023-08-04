@@ -45,7 +45,7 @@ export default function LoginPage() {
                             }
                         })}
                     />
-                    <p className="text-red-500 mt-2">{errors.email?.message}</p>
+                    <p className="text-red-500 text-xs mt-2">{errors.email?.message}</p>
                 </div>
                 <div className="w-full mb-2">
                     <input 
@@ -60,7 +60,7 @@ export default function LoginPage() {
                             }
                         })}
                     />
-                    <p className="text-red-500 mt-2">{errors.password?.message}</p>
+                    <p className="text-red-500 text-xs mt-2">{errors.password?.message}</p>
                 </div>
                 <Link href="#" className="w-full mb-10">
                     <p className="text-seecho-lightblue hover:underline">Forgot your password?</p>
