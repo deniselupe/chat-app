@@ -1,5 +1,6 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr, SecretStr
+
 
 class UserWebInbound(BaseModel):
-    email: str
-    password: str
+    email: EmailStr
+    password: SecretStr

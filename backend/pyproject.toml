@@ -14,6 +14,7 @@ python-multipart = "^0.0.6"
 argon2-cffi = "^21.3.0"
 tortoise-orm = {extras = ["asyncmy"], version = "^0.19.3"}
 pydantic-settings = "^2.0.2"
+email-validator = "^2.0.0.post2"
 
 
 [build-system]
