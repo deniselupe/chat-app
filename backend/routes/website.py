@@ -4,8 +4,7 @@ from typing import Annotated
 from tortoise.exceptions import DoesNotExist
 from utility.pydantic.models import UserWebInbound
 from utility.database.models import UserDetails
-from utility.auth.token import encode_token
-from utility.encryption.password import hash_password, verify_password
+from utility.utility import AuthUtil, EncryptionUtil
 from utility.config import get_settings, Settings
 
 router = APIRouter(
@@ -13,9 +12,10 @@ router = APIRouter(
     tags=["Website Routes"],
 )
 
+
 @router.post("/create_user")
 async def create_user(user_info: Annotated[UserWebInbound, None]):
-    hashed_pw = await hash_password(user_info.password)
+    hashed_pw = await EncryptionUtil.hash_password(user_info.password)
 
     db_outcome = await UserDetails.get_or_create(
         defaults={"password": hashed_pw},
@@ -34,14 +34,16 @@ async def login_user(
 ):
     try:
         db_outcome = await UserDetails.get(email=user_info.email)
-        verified_bool = await verify_password(db_outcome.password, user_info.password)
+        verified_bool = await EncryptionUtil.verify_password(
+            db_outcome.password, user_info.password
+        )
     except DoesNotExist:
         return JSONResponse(content={"message": "invalid credentials"}, status_code=200)
 
     if verified_bool is False:
         return JSONResponse(content={"message": "invalid credentials"}, status_code=200)
     elif verified_bool is True:
-        token = await encode_token(
+        token = await AuthUtil.encode_token(
             db_outcome, settings.TOKEN_SECRET_LOCAL, settings.TOKEN_SECRETPHRASE
         )
         return JSONResponse(
