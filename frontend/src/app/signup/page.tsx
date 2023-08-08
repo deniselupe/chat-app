@@ -4,19 +4,31 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 const SignupFormSchema = z.object({
-    first_name: z.string(),
-    last_name: z.string(),
-    email: z.string().email(),
-    password: z.string(),
-    confirm_password: z.string()
+    email: z.string().email("Please provide valid email address"),
+    password: z.string()
+        .min(8, "Password must be at least 8 characters long")
+        .max(100, "Password cannot be longer than 100 characters")
+        .refine((value) => /[A-Z]/.test(value), {
+            message: "Password must contain at least one uppercase letter (A-Z)",
+        })
+        .refine((value) => /[a-z]/.test(value), {
+            message: "Password must contain at least one lowercase letter (a-z)",
+        })
+        .refine((value) => /\d/.test(value), {
+            message: "Password must contain at least one numeric digit (0-9)",
+        })
+        .refine((value) => /[#!?@$%^&*-]/.test(value), {
+            message: "Password must contain at least one special character (#?!@$%^&*-)",
+        }),
 });
 
 type SignupFormType = z.infer<typeof SignupFormSchema>;
 
 export default function LoginPage() {
-    const form = useForm<SignupFormType>({shouldFocusError: false});
+    const form = useForm<SignupFormType>({shouldFocusError: false, resolver: zodResolver(SignupFormSchema)});
     const { register, control, handleSubmit, formState } = form;
     const { errors } = formState;
 
