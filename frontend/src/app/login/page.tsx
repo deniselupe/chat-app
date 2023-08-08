@@ -4,16 +4,17 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 const LoginFormSchema = z.object({
-    email: z.string().email(),
+    email: z.string().email("Please provide valid email address"),
     password: z.string()
 });
 
 type LoginFormType = z.infer<typeof LoginFormSchema>;
 
 export default function LoginPage() {
-    const form = useForm<LoginFormType>({shouldFocusError: false});
+    const form = useForm<LoginFormType>({shouldFocusError: false, resolver: zodResolver(LoginFormSchema)});
     const { register, control, handleSubmit, formState } = form;
     const { errors } = formState;
 
