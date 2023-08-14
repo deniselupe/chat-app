@@ -2,9 +2,11 @@
 
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
-import { DevTool } from '@hookform/devtools';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import DiscordIcon from '@/public/svgs/discord-icon.svg';
+import GoogleIcon from '@/public/svgs/google-icon.svg';
+import GitHubIcon from '@/public/svgs/github-icon.svg';
 
 const LoginFormSchema = z.object({
     email: z.string().email("Please provide valid email address"),
@@ -23,9 +25,8 @@ export default function LoginPage() {
     };
 
     return (
-        <main>
-            <form 
-                className="mx-auto w-[370px] md:w-[400px] h-fit sm:mt-28 p-10 rounded-3xl flex flex-col items-center bg-seecho-darkblue shadow-xl"
+        <main className="mx-auto w-[370px] md:w-[400px] h-fit sm:mt-28 p-10 rounded-3xl flex flex-col items-center bg-seecho-darkblue shadow-xl">
+            <form
                 onSubmit={handleSubmit(onSubmit)}
                 noValidate
             >
@@ -70,13 +71,24 @@ export default function LoginPage() {
                 <p className="w-full inline-flex text-seecho-orange">New to seecho? 
                     <Link href="/signup" className="ml-1 text-seecho-lightblue hover:underline">Create an account</Link>
                 </p>
-                <div className="w-full h-12 flex items-center">
-                    <hr className="w-1/2 border-top border-seecho-orange" />
-                    <p className="w-16 h-8 text-seecho-gold flex justify-center items-center border border-seecho-orange rounded-lg">OR</p>
-                    <hr className="w-1/2 border-top border-seecho-orange" />
-                </div>
             </form>
-            <DevTool control={control} />
+            <div className="w-full h-12 mt-2 flex items-center">
+                <hr className="w-1/2 border-top border-seecho-orange" />
+                <p className="w-16 h-8 text-seecho-gold flex justify-center items-center border border-seecho-orange rounded-lg">OR</p>
+                <hr className="w-1/2 border-top border-seecho-orange" />
+            </div>
+            <button className="w-full my-2 leading-10 tracking-wider text-xl text-seecho-darkblue bg-seecho-orange hover:bg-seecho-lightblue rounded-lg flex justify-center items-center">
+                <DiscordIcon className="w-6 mr-4" />
+                <p>Log in with Discord</p>
+            </button>
+            <button className="w-full my-2 leading-10 tracking-wider text-xl text-seecho-darkblue bg-seecho-orange hover:bg-seecho-lightblue rounded-lg flex justify-center items-center">
+                <GoogleIcon className="w-6 mr-4" />
+                <p>Log in with Google</p>
+            </button>
+            <button className="w-full my-2 leading-10 tracking-wider text-xl text-seecho-darkblue bg-seecho-orange hover:bg-seecho-lightblue rounded-lg flex justify-center items-center">
+                <GitHubIcon className="w-6 mr-4" />
+                <p>Log in with GitHub</p>
+            </button>
         </main>
     );
 }
