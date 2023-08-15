@@ -1,12 +1,11 @@
 import re
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from typing import Annotated
 from tortoise.exceptions import DoesNotExist
-from utility.pydantic.models import UserWebInbound
+from utility.pydantic.models import UserLogin, UserCreationWeb
 from utility.database.models import UserDetails
 from utility.utility import AuthUtil, EncryptionUtil
-from utility.config import get_settings, Settings
 from datetime import datetime
 
 router = APIRouter(
@@ -16,10 +15,10 @@ router = APIRouter(
 
 
 @router.post("/create_user")
-async def create_user(user_info: Annotated[UserWebInbound, None]):
+async def create_user(user_info: Annotated[UserCreationWeb, None]):
     if (
         re.match(
-            "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$",
+            "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,30}$",
             user_info.password.get_secret_value(),
         )
         is None
@@ -30,7 +29,8 @@ async def create_user(user_info: Annotated[UserWebInbound, None]):
         defaults={
             "password": await EncryptionUtil.hash_password(
                 user_info.password.get_secret_value()
-            )
+            ),
+            "account_creation_source": user_info.source
         },
         email=user_info.email,
     )
@@ -42,8 +42,7 @@ async def create_user(user_info: Annotated[UserWebInbound, None]):
 
 @router.post("/login_user")
 async def login_user(
-    user_info: Annotated[UserWebInbound, None],
-    settings: Annotated[Settings, Depends(get_settings)],
+    user_info: Annotated[UserLogin, None],
 ):
     try:
         db_outcome = await UserDetails.get(email=user_info.email)
@@ -56,9 +55,7 @@ async def login_user(
             )
         elif verified_bool is True:
             await db_outcome.update_from_dict({"last_login": datetime.now()}).save()
-            token = await AuthUtil.encode_token(
-                db_outcome, settings.TOKEN_SECRET_LOCAL, settings.TOKEN_SECRETPHRASE
-            )
+            token = await AuthUtil.encode_token(db_outcome)
             return JSONResponse(
                 content={"message": "token provided"},
                 headers={"x-auth-token": token},

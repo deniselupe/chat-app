@@ -1,40 +1,51 @@
 import pyseto
 import json
 import pytz
+from typing import Annotated
 from datetime import datetime
 from pyseto import Key
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
+from utility.config import get_settings
+from fastapi import Header, HTTPException
 
 ph = PasswordHasher()
+settings = get_settings()
+
 
 class AuthUtil:
     def __init__(self):
         pass
-    
+
     @staticmethod
-    async def encode_token(db_user, secret, secretphrase):
+    async def encode_token(db_user):
         payload = {
             "uuid": str(db_user.uuid),
             "email": str(db_user.email),
             "exp": str(datetime.now(pytz.timezone("UTC"))),
-            "secretphrase": str(secretphrase),
+            "secretphrase": str(settings.TOKEN_SECRETPHRASE),
         }
 
-        key = Key.new(version=4, purpose="local", key=bytes(secret, "utf-8"))
+        key = Key.new(
+            version=4, purpose="local", key=bytes(settings.TOKEN_SECRET_LOCAL, "utf-8")
+        )
         token = pyseto.encode(key, payload)
 
         return token.decode()
 
     @staticmethod
-    async def verify_token(token, secret, secretphrase):
+    async def verify_token(x_auth_token: Annotated[str, Header()]):
         token_exp_limit = 24
         try:
-            key = Key.new(version=4, purpose="local", key=bytes(secret, "utf-8"))
-            decoded = pyseto.decode(key, token)
+            key = Key.new(
+                version=4,
+                purpose="local",
+                key=bytes(settings.TOKEN_SECRET_LOCAL, "utf-8"),
+            )
+            decoded = pyseto.decode(key, x_auth_token)
             payload = json.loads(decoded.payload)
         except Exception:
-            return False
+            raise HTTPException(status_code=401, detail="x-auth-token header invalid.")
 
         try:
             assert (
@@ -47,10 +58,9 @@ class AuthUtil:
                 )
                 / 60
             ) < token_exp_limit
-            assert payload["secretphrase"] == secretphrase
-            return True
+            assert payload["secretphrase"] == settings.TOKEN_SECRETPHRASE
         except AssertionError:
-            return False
+            raise HTTPException(status_code=401, detail="x-auth-token header invalid.")
 
 
 class EncryptionUtil:

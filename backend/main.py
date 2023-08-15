@@ -1,10 +1,11 @@
 import uvicorn
 from tortoise.contrib.fastapi import register_tortoise
 from typing import Annotated
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from routes import auth, discord, website
 from utility.config import get_settings, Settings
+from utility.utility import AuthUtil
 
 app = FastAPI(root_path="/dev")
 
@@ -31,19 +32,30 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/brew_coffee", status_code=418)
+
+@app.get(
+    "/brew_coffee",
+    status_code=418,
+)
 async def brew_coffee():
     return "I can't brew coffee because..."
+
+
+@app.get(
+    "/protected",
+    dependencies=[Depends(AuthUtil.verify_token)],
+)
+async def protected_route():
+    return 200
+
 
 if __name__ == "__main__":
     uvicorn.run(
         # Core
         "main:app",
-
         # Host
         host="127.0.0.1",
         port=8000,
-
         # DEV Settings
         reload=settings.RELOAD,
     )
