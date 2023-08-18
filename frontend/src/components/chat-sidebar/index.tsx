@@ -1,8 +1,6 @@
-'use client';
-
-import Link from 'next/link';
-import SeechoLogo from '@/public/svgs/seecho-logo.svg';
-import MenuIcon from '@/public/svgs/menu-icon.svg';
+import Link from "next/link";
+import SidebarToggle from "@/components/sidebar-toggle";
+import SeechoLogo from "@/public/svgs/seecho-logo.svg";
 
 export default function ChatSidebar() {
     return (
@@ -11,7 +9,7 @@ export default function ChatSidebar() {
                 <Link href="/">
                     <SeechoLogo className="w-32 text-seecho-gold hover:text-seecho-lightblue" />
                 </Link>
-                <MenuIcon className="w-8 text-seecho-gold border border-seecho-gold hover:border-seecho-lightblue rounded" /> 
+                <SidebarToggle />
             </div>
             <ul className="mt-12">
                 <li>Dashboard</li>
