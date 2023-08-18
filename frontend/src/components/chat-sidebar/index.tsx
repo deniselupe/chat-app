@@ -1,8 +1,10 @@
+'use client';
+
 import Link from 'next/link';
 import SeechoLogo from '@/public/svgs/seecho-logo.svg';
 import MenuIcon from '@/public/svgs/menu-icon.svg';
 
-export default function ChatNavigation() {
+export default function ChatSidebar() {
     return (
         <div className="w-64 h-screen flex flex-col px-8 text-white bg-zinc-900">
             <div className="flex justify-between items-end mt-6">
