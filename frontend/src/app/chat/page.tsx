@@ -19,7 +19,7 @@ export default function Chat() {
         <main className="mx-auto fixed left-0 right-0 top-0 bottom-0">
             <Backdrop open={open} onClick={closeSidebar} />
             <ChatSidebar open={open} onClick={toggleSidebar} />
-            <p className={`border-2 duration-500 transform ${open ? 'md:translate-x-64': 'md:translate-x-0'}`}>Hello this is Chat UI</p>
+            <p className={`border-2 transition-all duration-500 ease-in-out ${open ? 'md:ml-64': 'md:ml-0'}`}>Hello this is Chat UI</p>
         </main>
     );
 }
