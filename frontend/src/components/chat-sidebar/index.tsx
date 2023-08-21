@@ -1,29 +1,22 @@
-'use client';
-
 import Link from "next/link";
 import SidebarToggle from "@/components/sidebar-toggle";
 import SeechoLogo from "@/public/svgs/seecho-logo.svg";
-import { useState } from 'react';
 
-export default function ChatSidebar() {
-    const [open, setOpen] = useState(false);
+type ChatSidebarType = {
+    open: boolean;
+    onClick: () => void;
+};
 
-    const toggleSidebar = () => {
-        console.log('the button was clicked');
-        setOpen(!open);
-    };
-
-    console.log('open', open);
-
+export default function ChatSidebar({ open, onClick }: ChatSidebarType) {
     return (
         <>
-            {!open && <SidebarToggle onClick={toggleSidebar} className="mt-6 ml-2 fixed z-2" />}
-            <div className={`w-60 h-screen flex flex-col px-4 text-white bg-zinc-900 ${open ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-200 ease-in-out z-1`}>
+            {!open && <SidebarToggle onClick={onClick} className="mt-6 ml-2 fixed z-20" />}
+            <div className={`fixed top-0 left-0 z-20 w-64 h-full px-4 text-white bg-zinc-900 duration-500 transform ${open ? 'translate-x-0' : '-translate-x-full'}`}>
                 <div className="flex justify-between items-end mt-6">
                     <Link href="/">
                         <SeechoLogo className="w-32 text-seecho-gold hover:text-seecho-lightblue" />
                     </Link>
-                    {open && <SidebarToggle onClick={toggleSidebar} />}
+                    {open && <SidebarToggle onClick={onClick} />}
                 </div>
                 <ul className="mt-12">
                     <li>Dashboard</li>
