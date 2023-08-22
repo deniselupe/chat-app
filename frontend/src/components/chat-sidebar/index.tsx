@@ -10,9 +10,8 @@ type ChatSidebarType = {
 export default function ChatSidebar({ open, onClick }: ChatSidebarType) {
     return (
         <>
-            {!open && <SidebarToggle onClick={onClick} className="mt-6 ml-2 fixed z-20" />}
             <div className={`fixed top-0 left-0 z-20 w-64 h-full px-4 text-white bg-zinc-900 duration-500 ${open ? 'translate-x-0' : '-translate-x-full'}`}>
-                <div className="flex justify-between items-end mt-6">
+                <div className="flex justify-between items-end py-4">
                     <Link href="/">
                         <SeechoLogo className="w-32 text-seecho-gold hover:text-seecho-lightblue" />
                     </Link>
