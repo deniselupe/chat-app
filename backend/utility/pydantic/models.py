@@ -18,3 +18,8 @@ class UserCreationWeb(BaseModel):
         if s != "website":
             raise ValueError("Bad source.")
         return s
+
+class DiscordInbound(BaseModel):
+    userid: int
+    username: str
+

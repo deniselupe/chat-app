@@ -1,7 +1,7 @@
 import uvicorn
 from tortoise.contrib.fastapi import register_tortoise
 from typing import Annotated
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, Header
 from fastapi.middleware.cors import CORSMiddleware
 from routes import auth, discord, website
 from utility.config import get_settings, Settings
@@ -37,7 +37,10 @@ app.add_middleware(
     "/brew_coffee",
     status_code=418,
 )
-async def brew_coffee():
+async def brew_coffee(
+    x_real_ip: str = Header(None, alias="X-Real-IP"),
+    x_forwarded_for: str = Header(None, alias="X-Forwarded-For"),
+):
     return "I can't brew coffee because..."
 
 
