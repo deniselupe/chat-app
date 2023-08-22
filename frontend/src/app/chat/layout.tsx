@@ -27,7 +27,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             <div className="py-4 px-4">
                 <SidebarToggle onClick={toggleSidebar} />
             </div>
-            <aside className={`border h-full transition-all duration-500 ease-in-out ${open ? 'md:ml-64' : 'md:ml-0'}`}>
+            <aside className={`border h-full max-h-[calc(100vh-6rem)] transition-all duration-500 ease-in-out ${open ? 'md:ml-64' : 'md:ml-0'}`}>
                 {children}
             </aside>
         </main>

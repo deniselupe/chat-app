@@ -1,8 +1,11 @@
+import Messages from "@/components/messages";
+import SeechoInteraction from "@/components/seecho-interaction";
+
 export default function Chat() {
     return (
-        <div className="border-2 w-full h-full">
-            <p>This is Chat UI</p>
-            <p>This is Seecho friend</p>
+        <div className="w-full h-full border-2 border-blue-400 flex flex-col lg:flex-row">
+            <Messages />
+            <SeechoInteraction />
         </div>
     );
 }
