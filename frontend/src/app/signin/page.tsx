@@ -1,27 +1,25 @@
 'use client';
 
-import Link from 'next/link';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import DiscordIcon from '@/public/svgs/discord-icon.svg';
-import GoogleIcon from '@/public/svgs/google-icon.svg';
-import GitHubIcon from '@/public/svgs/github-icon.svg';
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import DiscordIcon from "@/public/svgs/discord-icon.svg";
 
-const LoginFormSchema = z.object({
+const SignInFormSchema = z.object({
     email: z.string().email("Please provide valid email address"),
     password: z.string()
 });
 
-type LoginFormType = z.infer<typeof LoginFormSchema>;
+type SignInFormType = z.infer<typeof SignInFormSchema>;
 
-export default function LoginPage() {
-    const form = useForm<LoginFormType>({shouldFocusError: false, resolver: zodResolver(LoginFormSchema)});
-    const { register, control, handleSubmit, formState } = form;
+export default function SignInPage() {
+    const form = useForm<SignInFormType>({shouldFocusError: false, resolver: zodResolver(SignInFormSchema)});
+    const { register, handleSubmit, formState } = form;
     const { errors } = formState;
 
-    const onSubmit = (data: LoginFormType) => {
-        console.log('Login Form Submitted', data);
+    const onSubmit = (data: SignInFormType) => {
+        console.log('SignIn Form Submitted', data);
     };
 
     return (
@@ -67,7 +65,7 @@ export default function LoginPage() {
                 <Link href="#" className="w-full mb-10">
                     <p className="text-seecho-lightblue hover:underline">Forgot your password?</p>
                 </Link>
-                <button className="w-full mb-4 leading-10 tracking-wider text-2xl text-seecho-darkblue bg-seecho-orange hover:bg-seecho-lightblue rounded-lg">Log in</button>
+                <button className="w-full mb-4 leading-10 tracking-wider text-2xl text-seecho-darkblue bg-seecho-orange hover:bg-seecho-lightblue rounded-lg">Sign in</button>
                 <p className="w-full inline-flex text-seecho-orange">New to seecho? 
                     <Link href="/signup" className="ml-1 text-seecho-lightblue hover:underline">Create an account</Link>
                 </p>
@@ -77,17 +75,11 @@ export default function LoginPage() {
                 <p className="w-16 h-8 text-seecho-gold flex justify-center items-center border border-seecho-orange rounded-lg">OR</p>
                 <hr className="w-1/2 border-top border-seecho-orange" />
             </div>
-            <button className="w-full my-2 leading-10 tracking-wider text-xl text-seecho-darkblue bg-seecho-orange hover:bg-seecho-lightblue rounded-lg flex justify-center items-center">
+            <button 
+                className="w-full my-2 leading-10 tracking-wiedr text-xl text-seecho-darkblue bg-discord hover:bg-seecho-lightblue rounded-lg flex justify-center items-center"
+            >
                 <DiscordIcon className="w-6 mr-4" />
-                <p>Log in with Discord</p>
-            </button>
-            <button className="w-full my-2 leading-10 tracking-wider text-xl text-seecho-darkblue bg-seecho-orange hover:bg-seecho-lightblue rounded-lg flex justify-center items-center">
-                <GoogleIcon className="w-6 mr-4" />
-                <p>Log in with Google</p>
-            </button>
-            <button className="w-full my-2 leading-10 tracking-wider text-xl text-seecho-darkblue bg-seecho-orange hover:bg-seecho-lightblue rounded-lg flex justify-center items-center">
-                <GitHubIcon className="w-6 mr-4" />
-                <p>Log in with GitHub</p>
+                <p>Sign in with Discord</p>
             </button>
         </main>
     );

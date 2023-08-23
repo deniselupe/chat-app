@@ -22,12 +22,12 @@ export default function NavBar() {
                 <SearchIcon className="text-seecho-gold hover:text-black w-8 h-8 mx-2 sm:w-10 sm:h-10 lg:mx-4" />
                 <MenuIcon className="text-seecho-gold hover:text-black w-8 h-8 mx-2 sm:w-10 sm:h-10 lg:mx-4" />
                 {
-                    segment === 'login'
+                    segment === 'signin'
                     ?
                     null
                     :
-                    <Link href="/login">
-                        <p className="text-4xl font-medium text-seecho-gold hover:text-black mx-2 lg:mx-4">Login</p>
+                    <Link href="/signin">
+                        <p className="text-4xl font-medium text-seecho-gold hover:text-black mx-2 lg:mx-4">Sign in</p>
                     </Link>
                 }
             </div>
