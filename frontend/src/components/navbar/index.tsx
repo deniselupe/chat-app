@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import Logo from '@/public/svgs/seecho-logo.svg';
-import DiscordIcon from '@/public/svgs/discord-icon.svg';
 import TwitterIcon from '@/public/svgs/twitter-icon.svg';
 import SearchIcon from '@/public/svgs/search-icon.svg';
 import MenuIcon from '@/public/svgs/menu-icon.svg';
@@ -17,17 +16,16 @@ export default function NavBar() {
                 <Logo className="w-64 min-w-[256px] h-14 min-h-[56px] text-seecho-gold hover:text-black" />
             </Link>
             <div className="py-4 flex justify-center items-center">
-                <DiscordIcon className="text-seecho-gold hover:text-black w-8 h-8 mx-2 sm:w-10 sm:h-10 lg:mx-4" />
                 <TwitterIcon className="text-seecho-gold hover:text-black w-8 h-8 mx-2 lg:mx-4" />
                 <SearchIcon className="text-seecho-gold hover:text-black w-8 h-8 mx-2 sm:w-10 sm:h-10 lg:mx-4" />
                 <MenuIcon className="text-seecho-gold hover:text-black w-8 h-8 mx-2 sm:w-10 sm:h-10 lg:mx-4" />
                 {
-                    segment === 'login'
+                    segment === 'signin'
                     ?
                     null
                     :
-                    <Link href="/login">
-                        <p className="text-4xl font-medium text-seecho-gold hover:text-black mx-2 lg:mx-4">Login</p>
+                    <Link href="/signin">
+                        <p className="text-4xl font-medium text-seecho-gold hover:text-black mx-2 lg:mx-4">Sign in</p>
                     </Link>
                 }
             </div>

@@ -1,31 +1,49 @@
 'use client';
 
-import Link from 'next/link';
-import { useForm } from 'react-hook-form';
-import { DevTool } from '@hookform/devtools';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { nanoid } from "nanoid";
+import DiscordIcon from "@/public/svgs/discord-icon.svg";
 
-const LoginFormSchema = z.object({
+const SignInFormSchema = z.object({
     email: z.string().email("Please provide valid email address"),
     password: z.string()
 });
 
-type LoginFormType = z.infer<typeof LoginFormSchema>;
+type SignInFormType = z.infer<typeof SignInFormSchema>;
 
-export default function LoginPage() {
-    const form = useForm<LoginFormType>({shouldFocusError: false, resolver: zodResolver(LoginFormSchema)});
-    const { register, control, handleSubmit, formState } = form;
+export default function SignInPage() {
+    const form = useForm<SignInFormType>({shouldFocusError: false, resolver: zodResolver(SignInFormSchema)});
+    const { register, handleSubmit, formState } = form;
     const { errors } = formState;
 
-    const onSubmit = (data: LoginFormType) => {
-        console.log('Login Form Submitted', data);
+    const onSubmit = (data: SignInFormType) => {
+        console.log('SignIn Form Submitted', data);
+    };
+
+    const locateAuthState = () => {
+        const stateExists = localStorage.getItem('authState');
+
+        if (!!stateExists) {
+            localStorage.removeItem('authState');
+        }
+    };
+
+    const createAuthState = () => {
+        locateAuthState();
+        const now = new Date().getTime();
+        const expiration = now + (10 * 60 * 1000);
+        const state = nanoid();
+        const stateObj = {state, expiration};
+        localStorage.setItem('authState', JSON.stringify(stateObj));
+        return state;
     };
 
     return (
-        <main>
-            <form 
-                className="mx-auto w-[370px] md:w-[400px] h-fit sm:mt-28 p-10 rounded-3xl flex flex-col items-center bg-seecho-darkblue shadow-xl"
+        <main className="mx-auto w-[370px] md:w-[400px] h-fit sm:mt-28 p-10 rounded-3xl flex flex-col items-center bg-seecho-darkblue shadow-xl">
+            <form
                 onSubmit={handleSubmit(onSubmit)}
                 noValidate
             >
@@ -66,17 +84,23 @@ export default function LoginPage() {
                 <Link href="#" className="w-full mb-10">
                     <p className="text-seecho-lightblue hover:underline">Forgot your password?</p>
                 </Link>
-                <button className="w-full mb-4 leading-10 tracking-wider text-2xl text-seecho-darkblue bg-seecho-orange hover:bg-seecho-lightblue rounded-lg">Log in</button>
+                <button className="w-full mb-4 leading-10 tracking-wider text-2xl text-seecho-darkblue bg-seecho-orange hover:bg-seecho-lightblue rounded-lg">Sign in</button>
                 <p className="w-full inline-flex text-seecho-orange">New to seecho? 
                     <Link href="/signup" className="ml-1 text-seecho-lightblue hover:underline">Create an account</Link>
                 </p>
-                <div className="w-full h-12 flex items-center">
-                    <hr className="w-1/2 border-top border-seecho-orange" />
-                    <p className="w-16 h-8 text-seecho-gold flex justify-center items-center border border-seecho-orange rounded-lg">OR</p>
-                    <hr className="w-1/2 border-top border-seecho-orange" />
-                </div>
             </form>
-            <DevTool control={control} />
+            <div className="w-full h-12 mt-2 flex items-center">
+                <hr className="w-1/2 border-top border-seecho-orange" />
+                <p className="w-16 h-8 text-seecho-gold flex justify-center items-center border border-seecho-orange rounded-lg">OR</p>
+                <hr className="w-1/2 border-top border-seecho-orange" />
+            </div>
+            <Link
+                className="w-full my-2 leading-10 tracking-wiedr text-xl text-seecho-darkblue bg-discord hover:bg-seecho-lightblue rounded-lg flex justify-center items-center"
+                href={`https://discord.com/api/oauth2/authorize?client_id=1140763650303459408&redirect_uri=https%3A%2F%2Fptilol.com%2F&response_type=code&scope=identify%20email&state=${createAuthState()}`}
+            >
+                <DiscordIcon className="w-6 mr-4" />
+                <p>Sign in with Discord</p>
+            </Link>
         </main>
     );
 }
