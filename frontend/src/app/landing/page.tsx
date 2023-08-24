@@ -2,6 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
+import { ProviderType } from "@/types/auth";
 
 export default function LandingPage() {
     const router = useRouter();
@@ -9,7 +10,7 @@ export default function LandingPage() {
 
     // TODO: Remove authState from localStorage under condition that API call is 200 OK
     // TODO: Update /api/auth/ endpoint names to distinguish between /signin and /signup flows
-    const forwardAuthCode = async (code: string, provider: "discord") => {
+    const forwardAuthCode = async (code: string, provider: ProviderType) => {
         const url = `https://ptilol.com/api/auth/signup/${provider}?code=${code}`;
         const response = await fetch(url);
         console.log(response);

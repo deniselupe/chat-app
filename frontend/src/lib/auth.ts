@@ -1,4 +1,5 @@
 import { nanoid } from "nanoid";
+import { ProviderType } from "@/types/auth";
 
 export const locateAuthState = () => {
     const stateExists = !!localStorage.getItem('authState');
@@ -8,7 +9,7 @@ export const locateAuthState = () => {
     }
 };
 
-export const createAuthState = (provider: "discord") => {
+export const createAuthState = (provider: ProviderType) => {
     locateAuthState();
     const now = new Date().getTime();
     const expiration = now + (10 * 60 * 1000);
