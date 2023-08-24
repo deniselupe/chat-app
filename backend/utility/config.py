@@ -13,6 +13,10 @@ class Settings(BaseSettings):
     RELOAD: bool = "True"
     UDS: str = "/tmp/uvicorn.sock"
     PROXY_HEADERS: bool = "True"
+    DISCORD_CLIENT_ID: str = "DEFAULT"
+    DISCORD_SECRET: str = "DEFAULT"
+    GITHUB_CLIENT_ID: str = "DEFAULT"
+    GITHUB_SECRET: str = "DEFAULT"
 
     model_config = SettingsConfigDict(env_file="../.env")
 
