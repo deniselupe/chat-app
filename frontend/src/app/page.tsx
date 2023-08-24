@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import seechoFriend from '@/public/assets/seecho.webp';
 import HeartIcon from '@/public/svgs/heart-icon.svg';
 import TempOne from '@/public/assets/homepage-temp1.webp';
