@@ -96,12 +96,12 @@ class SSOUtil:
             "client_id": str(settings.DISCORD_CLIENT_ID),
             "client_secret": str(settings.DISCORD_SECRET),
             "grant_type": "authorization_code",
-            "code": code,
-            "redirect_uri": "https://ptilol.com",
+            "code": str(code),
+            "redirect_uri": "https://ptilol.com/landing/",
         }
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
         r = requests.post(
-            "https://discord.com/api/v10/oauth2/token", data=data, headers=headers
+            "https://discord.com/api/oauth2/token", data=data, headers=headers
         )
         r.raise_for_status()
 
