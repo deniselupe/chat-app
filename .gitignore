@@ -44,3 +44,4 @@ __pycache__
 .flaskenv*
 !.env.project
 README.md
+!.env.vault
