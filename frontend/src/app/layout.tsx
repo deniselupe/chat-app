@@ -1,9 +1,9 @@
-import React from 'react';
-import NavBar from '@/components/navbar';
-import '@/styles/globals.css'
-import { Outfit } from 'next/font/google'
+import React from "react";
+import NavBar from "@/components/navbar";
+import "@/styles/globals.css";
+import { Outfit } from "next/font/google";
 
-const outfit = Outfit({ weight: ['300', '400', '700'], subsets: ['latin'] });
+const outfit = Outfit({ weight: ["300", "400", "700"], subsets: ["latin"] });
 const outfitClassName = outfit.className;
 
 interface RootLayoutProps {
