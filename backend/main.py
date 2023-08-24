@@ -7,7 +7,7 @@ from routes import auth, discord, website
 from utility.config import get_settings, Settings
 from utility.utility import AuthUtil
 
-app = FastAPI(root_path="/dev")
+app = FastAPI(root_path="/api")
 
 settings: Annotated[Settings, None] = get_settings()
 register_tortoise(
