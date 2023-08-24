@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { nanoid } from "nanoid";
 import DiscordIcon from "@/public/svgs/discord-icon.svg";
 
 const SignInFormSchema = z.object({
@@ -20,6 +21,24 @@ export default function SignInPage() {
 
     const onSubmit = (data: SignInFormType) => {
         console.log('SignIn Form Submitted', data);
+    };
+
+    const locateAuthState = () => {
+        const stateExists = localStorage.getItem('authState');
+
+        if (!!stateExists) {
+            localStorage.removeItem('authState');
+        }
+    };
+
+    const createAuthState = () => {
+        locateAuthState();
+        const now = new Date().getTime();
+        const expiration = now + (10 * 60 * 1000);
+        const state = nanoid();
+        const stateObj = {state, expiration};
+        localStorage.setItem('authState', JSON.stringify(stateObj));
+        return state;
     };
 
     return (
@@ -75,12 +94,13 @@ export default function SignInPage() {
                 <p className="w-16 h-8 text-seecho-gold flex justify-center items-center border border-seecho-orange rounded-lg">OR</p>
                 <hr className="w-1/2 border-top border-seecho-orange" />
             </div>
-            <button 
+            <Link
                 className="w-full my-2 leading-10 tracking-wiedr text-xl text-seecho-darkblue bg-discord hover:bg-seecho-lightblue rounded-lg flex justify-center items-center"
+                href={`https://discord.com/api/oauth2/authorize?client_id=1140763650303459408&redirect_uri=https%3A%2F%2Fptilol.com%2F&response_type=code&scope=identify%20email&state=${createAuthState()}`}
             >
                 <DiscordIcon className="w-6 mr-4" />
                 <p>Sign in with Discord</p>
-            </button>
+            </Link>
         </main>
     );
 }
