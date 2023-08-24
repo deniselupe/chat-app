@@ -29,7 +29,7 @@ export default function SignInPage() {
 
     const initiateOAuth = (provider: "discord") => {
         if (provider === "discord") {
-            const state = createAuthState();
+            const state = createAuthState(provider);
             const url = `${discordUrl}&state=${state}`;
             router.push(url);
         }

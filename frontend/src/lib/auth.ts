@@ -8,12 +8,12 @@ export const locateAuthState = () => {
     }
 };
 
-export const createAuthState = () => {
+export const createAuthState = (provider: "discord") => {
     locateAuthState();
     const now = new Date().getTime();
     const expiration = now + (10 * 60 * 1000);
     const state = nanoid();
-    const stateObj = {state, expiration};
+    const stateObj = {provider, state, expiration};
     localStorage.setItem('authState', JSON.stringify(stateObj));
     return state;
 };
