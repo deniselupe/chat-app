@@ -1,6 +1,7 @@
 import pyseto
 import json
 import pytz
+import requests
 from typing import Annotated
 from datetime import datetime
 from pyseto import Key
@@ -62,6 +63,10 @@ class AuthUtil:
         except AssertionError:
             raise HTTPException(status_code=401, detail="x-auth-token header invalid.")
 
+    @staticmethod
+    async def auth_discord(code: Annotated[str, None]):
+        return
+
 
 class EncryptionUtil:
     def __init__(self):
@@ -79,3 +84,27 @@ class EncryptionUtil:
             return ph.verify(hashed, password)
         except VerifyMismatchError:
             return False
+
+
+class SSOUtil:
+    def __init__(self):
+        pass
+
+    @staticmethod
+    async def discord_request(code: Annotated[str, None]):
+        data = {
+            "client_id": str(settings.DISCORD_CLIENT_ID),
+            "client_secret": str(settings.DISCORD_SECRET),
+            "grant_type": "authorization_code",
+            "code": code,
+            "redirect_uri": "https://ptilol.com",
+        }
+        headers = {"Content-Type": "application/x-www-form-urlencoded"}
+        r = requests.post(
+            "https://discord.com/api/v10/oauth2/token", data=data, headers=headers
+        )
+        r.raise_for_status()
+
+        print(r)
+
+        return
