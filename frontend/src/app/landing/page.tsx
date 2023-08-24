@@ -28,6 +28,11 @@ export default function LandingPage() {
             console.log("Your state is past expiration! Please retry login.");
             return router.replace("/signin");
         }
+
+        if (origState !== state) {
+            console.log("The Provider's state does not match local state. Please retry login.");
+            return router.replace("/signin");
+        }
     }, []);
 
     return <div>Loading....</div>;
