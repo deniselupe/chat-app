@@ -3,12 +3,14 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { ActionType, ProviderType } from "@/types/auth";
+import { locateAuthState } from "@/lib/auth";
 
 export default function LandingPage() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
     const forwardAuthCode = async (action: ActionType, provider: ProviderType, code: string) => {
+        locateAuthState();
         const url = `https://ptilol.com/api/auth/${action}}/${provider}?code=${code}`;
         const response = await fetch(url);
         console.log(response);
