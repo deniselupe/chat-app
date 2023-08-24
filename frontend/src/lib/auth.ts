@@ -6,10 +6,10 @@ export const providerURLs = {
 };
 
 export const locateAuthState = () => {
-    const stateExists = !!localStorage.getItem('authState');
+    const stateExists = !!localStorage.getItem("authState");
 
     if (stateExists) {
-        localStorage.removeItem('authState');
+        localStorage.removeItem("authState");
     }
 };
 
@@ -19,6 +19,6 @@ export const createAuthState = (action: ActionType, provider: ProviderType) => {
     const expiration = now + (10 * 60 * 1000);
     const state = nanoid();
     const stateObj = {action, provider, state, expiration};
-    localStorage.setItem('authState', JSON.stringify(stateObj));
+    localStorage.setItem("authState", JSON.stringify(stateObj));
     return state;
 };

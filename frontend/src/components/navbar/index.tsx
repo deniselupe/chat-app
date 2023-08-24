@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import Logo from '@/public/svgs/seecho-logo.svg';
-import TwitterIcon from '@/public/svgs/twitter-icon.svg';
-import SearchIcon from '@/public/svgs/search-icon.svg';
-import MenuIcon from '@/public/svgs/menu-icon.svg';
-import { useSelectedLayoutSegment } from 'next/navigation';
+import Link from "next/link";
+import Logo from "@/public/svgs/seecho-logo.svg";
+import TwitterIcon from "@/public/svgs/twitter-icon.svg";
+import SearchIcon from "@/public/svgs/search-icon.svg";
+import MenuIcon from "@/public/svgs/menu-icon.svg";
+import { useSelectedLayoutSegment } from "next/navigation";
 
 export default function NavBar() {
     const segment = useSelectedLayoutSegment();
@@ -20,7 +20,7 @@ export default function NavBar() {
                 <SearchIcon className="text-seecho-gold hover:text-black w-8 h-8 mx-2 sm:w-10 sm:h-10 lg:mx-4" />
                 <MenuIcon className="text-seecho-gold hover:text-black w-8 h-8 mx-2 sm:w-10 sm:h-10 lg:mx-4" />
                 {
-                    segment === 'signin'
+                    segment === "signin"
                     ?
                     null
                     :
