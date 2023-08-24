@@ -1,10 +1,9 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useForm } from 'react-hook-form';
-import { DevTool } from '@hookform/devtools';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const SignupFormSchema = z.object({
     email: z.string().email("Please provide valid email address"),
@@ -29,11 +28,11 @@ type SignupFormType = z.infer<typeof SignupFormSchema>;
 
 export default function LoginPage() {
     const form = useForm<SignupFormType>({shouldFocusError: false, resolver: zodResolver(SignupFormSchema)});
-    const { register, control, handleSubmit, formState } = form;
+    const { register, handleSubmit, formState } = form;
     const { errors } = formState;
 
     const onSubmit = (data: SignupFormType) => {
-        console.log('Form submitted', data);
+        console.log("Form submitted", data);
     };
 
     return (
@@ -48,14 +47,14 @@ export default function LoginPage() {
                 </div>
                 <div className="w-full mb-4">
                     <input 
-                        className={`w-full px-4 leading-10 tracking-wider text-1xl text-seecho-gold bg-neutral-800 outline-none ${errors.email?.message && 'outline-red-500'} focus:outline-seecho-lightblue rounded-lg`}
+                        className={`w-full px-4 leading-10 tracking-wider text-1xl text-seecho-gold bg-neutral-800 outline-none ${errors.email?.message && "outline-red-500"} focus:outline-seecho-lightblue rounded-lg`}
                         type="email"
                         id="email"
                         placeholder="Email Address"
                         {...register("email", {
                             required: {
                                 value: true,
-                                message: 'Please provide your email address'
+                                message: "Please provide your email address"
                             }
                         })}
                     />
@@ -63,14 +62,14 @@ export default function LoginPage() {
                 </div>
                 <div className="w-full mb-10">
                     <input 
-                        className={`w-full px-4 leading-10 tracking-wider text-1xl text-seecho-gold bg-neutral-800 outline-none ${errors.password?.message && 'outline-red-500'} focus:outline-seecho-lightblue rounded-lg`}
+                        className={`w-full px-4 leading-10 tracking-wider text-1xl text-seecho-gold bg-neutral-800 outline-none ${errors.password?.message && "outline-red-500"} focus:outline-seecho-lightblue rounded-lg`}
                         type="text"
                         id="password"
                         placeholder="Create Password"
                         {...register("password", {
                             required: {
                                 value: true,
-                                message: 'Please provide a password'
+                                message: "Please provide a password"
                             }
                         })}
                     />
@@ -86,7 +85,6 @@ export default function LoginPage() {
                     <hr className="w-1/2 border-top border-seecho-orange" />
                 </div>
             </form>
-            <DevTool control={control} />
         </>
     );
 }
