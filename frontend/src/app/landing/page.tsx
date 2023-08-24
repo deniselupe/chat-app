@@ -6,11 +6,21 @@ import { useEffect } from "react";
 export default function LandingPage() {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const code = searchParams.get("code");
-    const state = searchParams.get("state");
-    const authState = localStorage.getItem("authState");
+
+    // TODO: Remove authState from localStorage under condition that API call is 200 OK
+    // TODO: Update /api/auth/ endpoint names to distinguish between /signin and /signup flows
+    const forwardAuthCode = async (code: string, provider: "discord") => {
+        const url = `https://ptilol.com/api/auth/signup/${provider}?code=${code}`;
+        const response = await fetch(url);
+        console.log(response);
+        return response;
+    };
 
     useEffect(() => {
+        const code = searchParams.get("code");
+        const state = searchParams.get("state");
+        const authState = localStorage.getItem("authState");
+
         if (!state || !code) {
             console.log("No state or code provided from provider. Please retry login.");
             return router.replace("/signin");
@@ -22,6 +32,7 @@ export default function LandingPage() {
         const authStateJson = JSON.parse(authState);
         const expiration = authStateJson["expiration"];
         const origState = authStateJson["state"];
+        const providerName = authStateJson["provider"];
         const now = new Date().getTime();
 
         if (now > expiration) {
@@ -33,6 +44,8 @@ export default function LandingPage() {
             console.log("The Provider's state does not match local state. Please retry login.");
             return router.replace("/signin");
         }
+
+        forwardAuthCode(code, providerName);
     }, []);
 
     return <div>Loading....</div>;
