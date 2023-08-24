@@ -1,9 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import DiscordIcon from "@/public/svgs/discord-icon.svg";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { createAuthState } from "@/lib/auth";
+import { ProviderType } from "@/types/auth";
+
+const providerURLs = {
+    discord: "https://discord.com/api/oauth2/authorize?client_id=1140763650303459408&redirect_uri=https%3A%2F%2Fptilol.com%2Flanding%2F&response_type=code&scope=identify%20email",
+};
 
 const SignupFormSchema = z.object({
     email: z.string().email("Please provide valid email address"),
@@ -26,7 +34,8 @@ const SignupFormSchema = z.object({
 
 type SignupFormType = z.infer<typeof SignupFormSchema>;
 
-export default function LoginPage() {
+export default function SignUpPage() {
+    const router = useRouter();
     const form = useForm<SignupFormType>({shouldFocusError: false, resolver: zodResolver(SignupFormSchema)});
     const { register, handleSubmit, formState } = form;
     const { errors } = formState;
@@ -35,13 +44,15 @@ export default function LoginPage() {
         console.log("Form submitted", data);
     };
 
+    const initiateOAuth = (provider: ProviderType) => {
+        const state = createAuthState(provider);
+        const url = `${providerURLs[provider]}&state=${state}`;
+        return router.push(url);
+    };
+
     return (
-        <>
-            <form 
-                className="mx-auto w-[370px] md:w-[400px] h-fit sm:mt-28 p-10 rounded-3xl flex flex-col items-center bg-seecho-darkblue shadow-xl"
-                onSubmit={handleSubmit(onSubmit)}
-                noValidate
-            >
+        <main className="mx-auto w-[370px] md:w-[400px] h-fit sm:mt-28 p-10 rounded-3xl flex flex-col items-center bg-seecho-darkblue shadow-xl">
+            <form onSubmit={handleSubmit(onSubmit)} noValidate>
                 <div className="w-full mb-8">
                     <h1 className="text-5xl text-seecho-orange text-center">Get Started</h1>
                 </div>
@@ -60,7 +71,7 @@ export default function LoginPage() {
                     />
                     <p className="text-red-500 text-xs mt-2">{errors.email?.message}</p>
                 </div>
-                <div className="w-full mb-10">
+                <div className="w-full mb-6">
                     <input 
                         className={`w-full px-4 leading-10 tracking-wider text-1xl text-seecho-gold bg-neutral-800 outline-none ${errors.password?.message && "outline-red-500"} focus:outline-seecho-lightblue rounded-lg`}
                         type="text"
@@ -77,14 +88,22 @@ export default function LoginPage() {
                 </div>
                 <button className="w-full mb-4 leading-10 tracking-wider text-2xl text-seecho-darkblue bg-seecho-orange hover:bg-seecho-lightblue rounded-lg">Create Account</button>
                 <p className="w-full inline-flex text-seecho-orange">Already have an account? 
-                    <Link href="/login" className="ml-1 text-seecho-lightblue hover:underline">Login</Link>
+                    <Link href="/login" className="ml-1 text-seecho-lightblue hover:underline">Sign in</Link>
                 </p>
-                <div className="w-full h-12 flex items-center">
-                    <hr className="w-1/2 border-top border-seecho-orange" />
-                    <p className="w-16 h-8 text-seecho-gold flex justify-center items-center border border-seecho-orange rounded-lg">OR</p>
-                    <hr className="w-1/2 border-top border-seecho-orange" />
-                </div>
             </form>
-        </>
+            <div className="w-full h-12 mt-2 flex items-center">
+                <hr className="w-1/2 border-top border-seecho-orange" />
+                <p className="w-16 h-8 text-seecho-gold flex justify-center items-center border border-seecho-orange rounded-lg">OR</p>
+                <hr className="w-1/2 border-top border-seecho-orange" />
+            </div>
+            <button
+                className="w-full my-2 leading-10 tracking-wiedr text-xl text-seecho-darkblue bg-discord hover:bg-seecho-lightblue rounded-lg flex justify-center items-center"
+                onClick={() => initiateOAuth("discord")}
+                type="button"
+            >
+                <DiscordIcon className="w-6 mr-4" />
+                <p>Sign up with Discord</p>
+            </button>
+        </main>
     );
 }

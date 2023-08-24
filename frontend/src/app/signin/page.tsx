@@ -38,10 +38,7 @@ export default function SignInPage() {
 
     return (
         <main className="mx-auto w-[370px] md:w-[400px] h-fit sm:mt-28 p-10 rounded-3xl flex flex-col items-center bg-seecho-darkblue shadow-xl">
-            <form
-                onSubmit={handleSubmit(onSubmit)}
-                noValidate
-            >
+            <form onSubmit={handleSubmit(onSubmit)} noValidate>
                 <div className="w-full mb-8">
                     <h1 className="mb-2 text-5xl text-seecho-orange text-center">Welcome back!</h1>
                     <h2 className="text-center text-seecho-orange">We are so excited to see you again!</h2>
@@ -76,7 +73,7 @@ export default function SignInPage() {
                     />
                     <p className="text-red-500 text-xs mt-2">{errors.password?.message}</p>
                 </div>
-                <Link href="#" className="w-full mb-10">
+                <Link href="#" className="w-full">
                     <p className="text-seecho-lightblue hover:underline">Forgot your password?</p>
                 </Link>
                 <button className="w-full mb-4 leading-10 tracking-wider text-2xl text-seecho-darkblue bg-seecho-orange hover:bg-seecho-lightblue rounded-lg">Sign in</button>
