@@ -8,7 +8,9 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createAuthState } from "@/lib/auth";
 
-const discordUrl = "https://discord.com/api/oauth2/authorize?client_id=1140763650303459408&redirect_uri=https%3A%2F%2Fptilol.com%2Flanding%2F&response_type=code&scope=identify%20email";
+const providerURLs = {
+    discord: "https://discord.com/api/oauth2/authorize?client_id=1140763650303459408&redirect_uri=https%3A%2F%2Fptilol.com%2Flanding%2F&response_type=code&scope=identify%20email",
+};
 
 const SignInFormSchema = z.object({
     email: z.string().email("Please provide valid email address"),
@@ -28,11 +30,9 @@ export default function SignInPage() {
     };
 
     const initiateOAuth = (provider: "discord") => {
-        if (provider === "discord") {
-            const state = createAuthState(provider);
-            const url = `${discordUrl}&state=${state}`;
-            router.push(url);
-        }
+        const state = createAuthState(provider);
+        const url = `${providerURLs[provider]}&state=${state}`;
+        return router.push(url);
     };
 
     return (
