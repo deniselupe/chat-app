@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { nanoid } from "nanoid";
+import { createAuthState } from "@/lib/auth";
 import DiscordIcon from "@/public/svgs/discord-icon.svg";
 
 const SignInFormSchema = z.object({
@@ -21,24 +21,6 @@ export default function SignInPage() {
 
     const onSubmit = (data: SignInFormType) => {
         console.log('SignIn Form Submitted', data);
-    };
-
-    const locateAuthState = () => {
-        const stateExists = localStorage.getItem('authState');
-
-        if (!!stateExists) {
-            localStorage.removeItem('authState');
-        }
-    };
-
-    const createAuthState = () => {
-        locateAuthState();
-        const now = new Date().getTime();
-        const expiration = now + (10 * 60 * 1000);
-        const state = nanoid();
-        const stateObj = {state, expiration};
-        localStorage.setItem('authState', JSON.stringify(stateObj));
-        return state;
     };
 
     return (
