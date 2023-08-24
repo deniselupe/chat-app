@@ -96,7 +96,7 @@ export default function SignInPage() {
             </div>
             <Link
                 className="w-full my-2 leading-10 tracking-wiedr text-xl text-seecho-darkblue bg-discord hover:bg-seecho-lightblue rounded-lg flex justify-center items-center"
-                href={`https://discord.com/api/oauth2/authorize?client_id=1140763650303459408&redirect_uri=https%3A%2F%2Fptilol.com%2F&response_type=code&scope=identify%20email&state=${createAuthState()}`}
+                href={`https://discord.com/api/oauth2/authorize?client_id=1140763650303459408&redirect_uri=https%3A%2F%2Fptilol.com%2Flanding%2F&response_type=code&scope=identify%20email&state=${createAuthState()}`}
             >
                 <DiscordIcon className="w-6 mr-4" />
                 <p>Sign in with Discord</p>
