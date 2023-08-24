@@ -27,7 +27,7 @@ export default function SignInPage() {
     };
 
     const initiateOAuth = (provider: ProviderType) => {
-        const state = createAuthState(provider);
+        const state = createAuthState("signin", provider);
         const url = `${providerURLs[provider]}&state=${state}`;
         return router.push(url);
     };

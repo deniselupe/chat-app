@@ -41,7 +41,7 @@ export default function SignUpPage() {
     };
 
     const initiateOAuth = (provider: ProviderType) => {
-        const state = createAuthState(provider);
+        const state = createAuthState("signup", provider);
         const url = `${providerURLs[provider]}&state=${state}`;
         return router.push(url);
     };

@@ -2,19 +2,22 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
-import { ProviderType } from "@/types/auth";
+import { ActionType, ProviderType } from "@/types/auth";
 
 export default function LandingPage() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
-    // TODO: Remove authState from localStorage under condition that API call is 200 OK
-    // TODO: Update /api/auth/ endpoint names to distinguish between /signin and /signup flows
-    const forwardAuthCode = async (code: string, provider: ProviderType) => {
-        const url = `https://ptilol.com/api/auth/signup/${provider}?code=${code}`;
+    const forwardAuthCode = async (action: ActionType, provider: ProviderType, code: string) => {
+        const url = `https://ptilol.com/api/auth/${action}}/${provider}?code=${code}`;
         const response = await fetch(url);
         console.log(response);
-        return response;
+
+        if (response.status === 200) {
+            // TODO: Redirect user to their Chat UI
+        } else {
+            // TODO: Error occurred when trying to signup or signin, redirect user to login page
+        }
     };
 
     useEffect(() => {
@@ -34,6 +37,7 @@ export default function LandingPage() {
         const expiration = authStateJson["expiration"];
         const origState = authStateJson["state"];
         const providerName = authStateJson["provider"];
+        const action = authStateJson["action"];
         const now = new Date().getTime();
 
         if (now > expiration) {
@@ -46,7 +50,7 @@ export default function LandingPage() {
             return router.replace("/signin");
         }
 
-        forwardAuthCode(code, providerName);
+        forwardAuthCode(action, providerName, code);
     }, []);
 
     return <div>Loading....</div>;

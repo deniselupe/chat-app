@@ -1,1 +1,2 @@
-export type ProviderType = "discord";
+export type ActionType = "signup" | "signin";
+export type ProviderType = "discord"
