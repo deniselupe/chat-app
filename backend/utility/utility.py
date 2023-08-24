@@ -2,6 +2,7 @@ import pyseto
 import json
 import pytz
 import requests
+from utility.database.models import UserDetails
 from typing import Annotated
 from datetime import datetime
 from pyseto import Key
@@ -63,10 +64,6 @@ class AuthUtil:
         except AssertionError:
             raise HTTPException(status_code=401, detail="x-auth-token header invalid.")
 
-    @staticmethod
-    async def auth_discord(code: Annotated[str, None]):
-        return
-
 
 class EncryptionUtil:
     def __init__(self):
@@ -96,15 +93,33 @@ class SSOUtil:
             "client_id": str(settings.DISCORD_CLIENT_ID),
             "client_secret": str(settings.DISCORD_SECRET),
             "grant_type": "authorization_code",
-            "code": str(code),
+            "code": code,
             "redirect_uri": "https://ptilol.com/landing/",
         }
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
-        r = requests.post(
-            "https://discord.com/api/oauth2/token", data=data, headers=headers
+
+        try:
+            r = requests.post(
+                "https://discord.com/api/oauth2/token", data=data, headers=headers
+            ).json()
+            user_headers = {"authorization": f"{r['token_type']} {r['access_token']}"}
+            r = requests.get(
+                "https://discord.com/api/users/@me", headers=user_headers
+            ).json()
+
+        except Exception:
+            raise HTTPException(status_code=401, detail="something has failed...")
+
+        user_object = await UserDetails.get_or_create(
+            defaults={
+                "discord_user_id": int(r["id"]),
+                "discord_true_username": r["username"],
+                "discord_global_nickname": r["global_name"],
+                "discord_email_verified": r["verified"],
+                "account_creation_source": "discord",
+            },
+            email=r["email"],
         )
-        r.raise_for_status()
 
-        print(r)
-
-        return
+        return await AuthUtil.encode_token(user_object[0])
+        

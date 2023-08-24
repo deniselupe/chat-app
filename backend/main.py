@@ -3,7 +3,7 @@ from tortoise.contrib.fastapi import register_tortoise
 from typing import Annotated
 from fastapi import FastAPI, Depends, Header
 from fastapi.middleware.cors import CORSMiddleware
-from routes import auth, discord, website
+from routes import auth, website
 from utility.config import get_settings, Settings
 from utility.utility import AuthUtil
 
@@ -22,7 +22,6 @@ origins = [
 ]
 
 app.include_router(auth.router)
-app.include_router(discord.router)
 app.include_router(website.router)
 app.add_middleware(
     CORSMiddleware,

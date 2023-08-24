@@ -1,4 +1,5 @@
 from fastapi import APIRouter, HTTPException, Depends
+from fastapi.responses import JSONResponse
 from utility.utility import AuthUtil, SSOUtil
 
 router = APIRouter(
@@ -12,7 +13,11 @@ async def auth_token():
     return HTTPException(status_code=200, detail="x-auth-token header valid.")
 
 
-@router.get("/signup/discord", dependencies=[Depends(SSOUtil.discord_request)])
-async def discord_auth():
-
-    return 200
+@router.get("/signup/discord")
+async def discord_auth(code: str):
+    token = await SSOUtil.discord_request(code)
+    return JSONResponse(
+                content={"message": "token provided"},
+                headers={"x-auth-token": token},
+                status_code=200,
+            )
