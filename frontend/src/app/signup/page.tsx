@@ -6,12 +6,8 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createAuthState } from "@/lib/auth";
+import { providerURLs, createAuthState } from "@/lib/auth";
 import { ProviderType } from "@/types/auth";
-
-const providerURLs = {
-    discord: "https://discord.com/api/oauth2/authorize?client_id=1140763650303459408&redirect_uri=https%3A%2F%2Fptilol.com%2Flanding%2F&response_type=code&scope=identify%20email",
-};
 
 const SignupFormSchema = z.object({
     email: z.string().email("Please provide valid email address"),
