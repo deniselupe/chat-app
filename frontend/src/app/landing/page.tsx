@@ -11,7 +11,7 @@ export default function LandingPage() {
 
     const forwardAuthCode = async (action: ActionType, provider: ProviderType, code: string) => {
         locateAuthState();
-        const url = `https://ptilol.com/api/auth/${action}}/${provider}?code=${code}`;
+        const url = `https://ptilol.com/api/auth/${action}/${provider}?code=${code}`;
         const response = await fetch(url);
         console.log(response);
 
