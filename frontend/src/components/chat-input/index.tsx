@@ -29,16 +29,16 @@ export default function ChatInput() {
     console.log('Rendered!');
 
     return (
-        <div className="flex items-center justify-center gap-1 p-2 mx-4 h-fit max-h-[200px] rounded-md bg-slate-800">
+        <div className="relative flex items-center p-2 mx-4 rounded-md bg-slate-800">
             <textarea 
-                className="flex-1 p-2 outline-none resize-none bg-slate-800 text-white"
+                className="flex-1 py-2 pl-2 pr-12 outline-none resize-none bg-slate-800 text-white"
                 placeholder="Send a message"
                 rows={1}
                 ref={textAreaRef}
                 onChange={handleInput}
                 value={input}
             />
-            <button className="bg-seecho-gold rounded">
+            <button className="absolute right-4 bottom-4 bg-seecho-gold rounded">
                 Send
             </button>
         </div>
