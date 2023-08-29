@@ -2,21 +2,39 @@
 
 import Link from "next/link";
 import DiscordIcon from "@/public/svgs/discord-icon.svg";
+import ShowPassword from "@/public/svgs/show-password.svg";
+import HidePassword from "@/public/svgs/hide-password.svg";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { providerURLs, createAuthState } from "@/lib/auth";
 import { ProviderType } from "@/types/auth";
+import { useState } from "react";
 
 const SignInFormSchema = z.object({
     email: z.string().email("Please provide valid email address"),
     password: z.string()
+        .min(8, "Password must be at least 8 characters long")
+        .max(100, "Password cannot be longer than 100 characters")
+        .refine((value) => /[A-Z]/.test(value), {
+            message: "Password must contain at least one uppercase letter (A-Z)",
+        })
+        .refine((value) => /[a-z]/.test(value), {
+            message: "Password must contain at least one lowercase letter (a-z)",
+        })
+        .refine((value) => /\d/.test(value), {
+            message: "Password must contain at least one numeric digit (0-9)",
+        })
+        .refine((value) => /[#!?@$%^&*-]/.test(value), {
+            message: "Password must contain at least one special character (#?!@$%^&*-)",
+        }),
 });
 
 type SignInFormType = z.infer<typeof SignInFormSchema>;
 
 export default function SignInPage() {
+    const [showPassword, setShowPassword] = useState(false);
     const router = useRouter();
     const form = useForm<SignInFormType>({shouldFocusError: false, resolver: zodResolver(SignInFormSchema)});
     const { register, handleSubmit, formState } = form;
@@ -30,6 +48,10 @@ export default function SignInPage() {
         const state = createAuthState("signin", provider);
         const url = `${providerURLs[provider]}&state=${state}`;
         return router.push(url);
+    };
+
+    const handleShowPassword = () => {
+        setShowPassword((prev) => !prev);
     };
 
     return (
@@ -54,10 +76,10 @@ export default function SignInPage() {
                     />
                     <p className="text-red-500 text-xs mt-2">{errors.email?.message}</p>
                 </div>
-                <div className="w-full mb-2">
+                <div className="relative flex items-center w-full">
                     <input 
-                        className={`w-full px-4 leading-10 tracking-wider text-1xl text-seecho-gold bg-neutral-800 outline-none ${errors.password?.message && 'outline-red-500'} focus:outline-seecho-lightblue rounded-lg`}
-                        type="text"
+                        className={`w-full pl-4 pr-12 text-seecho-gold text-1xl leading-10 tracking-wider bg-neutral-800 outline-none ${errors.password?.message && 'outline-red-500'} focus:outline-seecho-lightblue rounded-lg`}
+                        type={showPassword ? "text" : "password"}
                         id="password"
                         placeholder="Password"
                         {...register("password", {
@@ -67,12 +89,21 @@ export default function SignInPage() {
                             }
                         })}
                     />
-                    <p className="text-red-500 text-xs mt-2">{errors.password?.message}</p>
+                    <div className="absolute right-2 w-8 aspect-square text-seecho-gold cursor-pointer" onClick={handleShowPassword}>
+                        {
+                            showPassword
+                            ?
+                            <ShowPassword />
+                            :
+                            <HidePassword />
+                        }
+                    </div>
                 </div>
+                <p className="mt-2 text-red-500 text-xs mt-2 mb-4">{errors.password?.message}</p>
                 <Link href="#" className="w-full">
                     <p className="text-seecho-lightblue hover:underline">Forgot your password?</p>
                 </Link>
-                <button className="w-full mb-4 leading-10 tracking-wider text-2xl text-seecho-darkblue bg-seecho-orange hover:bg-seecho-lightblue rounded-lg">Sign in</button>
+                <button className="w-full mb-4 text-seecho-darkblue text-2xl tracking-wider leading-10 bg-seecho-orange hover:bg-seecho-lightblue rounded-lg">Sign in</button>
                 <p className="w-full inline-flex text-seecho-orange">New to seecho? 
                     <Link href="/signup" className="ml-1 text-seecho-lightblue hover:underline">Create an account</Link>
                 </p>

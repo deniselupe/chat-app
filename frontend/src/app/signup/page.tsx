@@ -2,12 +2,15 @@
 
 import Link from "next/link";
 import DiscordIcon from "@/public/svgs/discord-icon.svg";
+import ShowPassword from "@/public/svgs/show-password.svg";
+import HidePassword from "@/public/svgs/hide-password.svg";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { providerURLs, createAuthState } from "@/lib/auth";
 import { ProviderType } from "@/types/auth";
+import { useState } from "react";
 
 const SignupFormSchema = z.object({
     email: z.string().email("Please provide valid email address"),
@@ -31,6 +34,7 @@ const SignupFormSchema = z.object({
 type SignupFormType = z.infer<typeof SignupFormSchema>;
 
 export default function SignUpPage() {
+    const [showPassword, setShowPassword] = useState(false);
     const router = useRouter();
     const form = useForm<SignupFormType>({shouldFocusError: false, resolver: zodResolver(SignupFormSchema)});
     const { register, handleSubmit, formState } = form;
@@ -44,6 +48,10 @@ export default function SignUpPage() {
         const state = createAuthState("signup", provider);
         const url = `${providerURLs[provider]}&state=${state}`;
         return router.push(url);
+    };
+
+    const handleShowPassword = () => {
+        setShowPassword((prev) => !prev);
     };
 
     return (
@@ -67,10 +75,10 @@ export default function SignUpPage() {
                     />
                     <p className="text-red-500 text-xs mt-2">{errors.email?.message}</p>
                 </div>
-                <div className="w-full mb-6">
+                <div className="relative flex items-center w-full">
                     <input 
-                        className={`w-full px-4 leading-10 tracking-wider text-1xl text-seecho-gold bg-neutral-800 outline-none ${errors.password?.message && "outline-red-500"} focus:outline-seecho-lightblue rounded-lg`}
-                        type="text"
+                        className={`w-full pl-4 pr-12 text-seecho-gold text-1xl leading-10 tracking-wider bg-neutral-800 outline-none ${errors.password?.message && "outline-red-500"} focus:outline-seecho-lightblue rounded-lg`}
+                        type={showPassword ? "text" : "password"}
                         id="password"
                         placeholder="Create Password"
                         {...register("password", {
@@ -80,11 +88,20 @@ export default function SignUpPage() {
                             }
                         })}
                     />
-                    <p className="text-red-500 text-xs mt-2">{errors.password?.message}</p>
+                    <div className="absolute right-2 w-8 aspect-square text-seecho-gold cursor-pointer" onClick={handleShowPassword}>
+                        {
+                            showPassword
+                            ?
+                            <ShowPassword />
+                            :
+                            <HidePassword />
+                        }
+                    </div>
                 </div>
+                <p className="text-red-500 text-xs mt-2 mb-4">{errors.password?.message}</p>
                 <button className="w-full mb-4 leading-10 tracking-wider text-2xl text-seecho-darkblue bg-seecho-orange hover:bg-seecho-lightblue rounded-lg">Create Account</button>
                 <p className="w-full inline-flex text-seecho-orange">Already have an account? 
-                    <Link href="/login" className="ml-1 text-seecho-lightblue hover:underline">Sign in</Link>
+                    <Link href="/signin" className="ml-1 text-seecho-lightblue hover:underline">Sign in</Link>
                 </p>
             </form>
             <div className="w-full h-12 mt-2 flex items-center">
