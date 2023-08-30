@@ -2,6 +2,8 @@ import pyseto
 import json
 import pytz
 import requests
+import secrets
+from cachetools import TTLCache
 from utility.database.models import UserDetails
 from typing import Annotated
 from datetime import datetime
@@ -10,9 +12,12 @@ from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 from utility.config import get_settings
 from fastapi import Header, HTTPException
+from fastapi.responses import RedirectResponse
 
 ph = PasswordHasher()
 settings = get_settings()
+state_cache = TTLCache(maxsize=100, ttl=60)
+user_cache = TTLCache(maxsize=100, ttl=60)
 
 
 class AuthUtil:
@@ -64,6 +69,19 @@ class AuthUtil:
         except AssertionError:
             raise HTTPException(status_code=401, detail="x-auth-token header invalid.")
 
+    @staticmethod
+    async def build_auth_url(provider, intent):
+        state_id = secrets.token_urlsafe(16)
+        state_cache[state_id] = (state_id, intent)
+        if provider == "discord":
+            return f"https://discord.com/api/oauth2/authorize?client_id={settings.DISCORD_CLIENT_ID}&redirect_uri=https%3A%2F%2Fpancakepuncher.com%2Fapi%2Fauth%2Fuser%2Fsso&response_type=code&scope=identify%20email&state={state_id}"
+        else:
+            return HTTPException(status_code=400, detail="no provider flag.")
+
+    @staticmethod
+    async def verify_cache_state(state):
+        return state_cache.get(state)
+
 
 class EncryptionUtil:
     def __init__(self):
@@ -88,13 +106,13 @@ class SSOUtil:
         pass
 
     @staticmethod
-    async def discord_request(code: Annotated[str, None]):
+    async def ret_discord_user_info(code: Annotated[str, None]):
         data = {
             "client_id": str(settings.DISCORD_CLIENT_ID),
             "client_secret": str(settings.DISCORD_SECRET),
             "grant_type": "authorization_code",
             "code": code,
-            "redirect_uri": "https://ptilol.com/landing/",
+            "redirect_uri": "https://pancakepuncher.com/api/auth/user/sso",
         }
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
 
@@ -109,17 +127,43 @@ class SSOUtil:
 
         except Exception:
             raise HTTPException(status_code=401, detail="something has failed...")
+        return r
 
-        user_object = await UserDetails.get_or_create(
-            defaults={
-                "discord_user_id": int(r["id"]),
-                "discord_true_username": r["username"],
-                "discord_global_nickname": r["global_name"],
-                "discord_email_verified": r["verified"],
-                "account_creation_source": "discord",
-            },
-            email=r["email"],
+    @staticmethod
+    async def SSO_validator(code, state, source):
+        state_val = await AuthUtil.verify_cache_state(state)
+        if state_val is None:
+            return RedirectResponse(
+                url="https://ptilol.com/signin"
+            )
+        else:
+            pass
+
+        if source == "https://discord.com/":
+            discord_user_info = await SSOUtil.ret_discord_user_info(code)
+
+        return discord_user_info, state_val[1]
+
+
+class DatabaseUtil:
+    @staticmethod
+    async def check_user_exist(u):
+        try:
+            user_info = await UserDetails.get(email=u["email"])
+        except Exception as e:
+            return str(e)
+        
+        return user_info
+    
+    @staticmethod
+    async def create_new_user(u):
+        await UserDetails.create(
+            discord_user_id=int(u["id"]),
+            discord_true_username=u["username"],
+            discord_global_nickname=u["global_name"],
+            discord_email_verified=u["verified"],
+            account_creation_source="discord",
+            email=u["email"],
         )
 
-        return await AuthUtil.encode_token(user_object[0])
-        
+        return
