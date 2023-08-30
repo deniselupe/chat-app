@@ -15,7 +15,7 @@ from fastapi import Header, HTTPException
 from fastapi.responses import RedirectResponse
 
 ph = PasswordHasher()
-settings = get_settings()
+global_settings, local_settings = get_settings()
 state_cache = TTLCache(maxsize=100, ttl=60)
 user_cache = TTLCache(maxsize=100, ttl=60)
 
@@ -30,11 +30,13 @@ class AuthUtil:
             "uuid": str(db_user.uuid),
             "email": str(db_user.email),
             "exp": str(datetime.now(pytz.timezone("UTC"))),
-            "secretphrase": str(settings.TOKEN_SECRETPHRASE),
+            "secretphrase": str(global_settings.TOKEN_SECRETPHRASE),
         }
 
         key = Key.new(
-            version=4, purpose="local", key=bytes(settings.TOKEN_SECRET_LOCAL, "utf-8")
+            version=4,
+            purpose="local",
+            key=bytes(global_settings.TOKEN_SECRET_LOCAL, "utf-8"),
         )
         token = pyseto.encode(key, payload)
 
@@ -47,7 +49,7 @@ class AuthUtil:
             key = Key.new(
                 version=4,
                 purpose="local",
-                key=bytes(settings.TOKEN_SECRET_LOCAL, "utf-8"),
+                key=bytes(global_settings.TOKEN_SECRET_LOCAL, "utf-8"),
             )
             decoded = pyseto.decode(key, x_auth_token)
             payload = json.loads(decoded.payload)
@@ -65,7 +67,7 @@ class AuthUtil:
                 )
                 / 60
             ) < token_exp_limit
-            assert payload["secretphrase"] == settings.TOKEN_SECRETPHRASE
+            assert payload["secretphrase"] == global_settings.TOKEN_SECRETPHRASE
         except AssertionError:
             raise HTTPException(status_code=401, detail="x-auth-token header invalid.")
 
@@ -74,7 +76,7 @@ class AuthUtil:
         state_id = secrets.token_urlsafe(16)
         state_cache[state_id] = (state_id, intent)
         if provider == "discord":
-            return f"https://discord.com/api/oauth2/authorize?client_id={settings.DISCORD_CLIENT_ID}&redirect_uri=https%3A%2F%2Fptilol.com%2Fapi%2Fauth%2Fuser%2Fsso&response_type=code&scope=identify%20email&state={state_id}"
+            return f"https://discord.com/api/oauth2/authorize?client_id={global_settings.DISCORD_CLIENT_ID}&redirect_uri=https%3A%2F%2F{local_settings.SSO_DOMAIN}%2Fapi%2Fauth%2Fuser%2Fsso&response_type=code&scope=identify%20email&state={state_id}"
         else:
             return HTTPException(status_code=400, detail="no provider flag.")
 
@@ -108,8 +110,8 @@ class SSOUtil:
     @staticmethod
     async def ret_discord_user_info(code: Annotated[str, None]):
         data = {
-            "client_id": str(settings.DISCORD_CLIENT_ID),
-            "client_secret": str(settings.DISCORD_SECRET),
+            "client_id": str(global_settings.DISCORD_CLIENT_ID),
+            "client_secret": str(global_settings.DISCORD_SECRET),
             "grant_type": "authorization_code",
             "code": code,
             "redirect_uri": "https://ptilol.com/api/auth/user/sso",
@@ -133,9 +135,7 @@ class SSOUtil:
     async def SSO_validator(code, state, source):
         state_val = await AuthUtil.verify_cache_state(state)
         if state_val is None:
-            return RedirectResponse(
-                url="https://ptilol.com/signin"
-            )
+            return RedirectResponse(url="https://ptilol.com/signin")
         else:
             pass
 
@@ -152,9 +152,9 @@ class DatabaseUtil:
             user_info = await UserDetails.get(email=u["email"])
         except Exception as e:
             return str(e)
-        
+
         return user_info
-    
+
     @staticmethod
     async def create_new_user(u):
         await UserDetails.create(

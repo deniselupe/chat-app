@@ -1,7 +1,7 @@
 from functools import lru_cache
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-class Settings(BaseSettings):
+class GlobalSettings(BaseSettings):
     TOKEN_SECRET_LOCAL: str = "DEFAULT"
     TOKEN_SECRETPHRASE: str = "DEFAULT"
     DB_USER: str = "DEFAULT"
@@ -20,6 +20,12 @@ class Settings(BaseSettings):
 
     model_config = SettingsConfigDict(env_file="../.env")
 
+class LocalSettings(BaseSettings):
+    GEN_SCHEMASl: str
+    SSO_DOMAIN: str
+
+    model_config = SettingsConfigDict(env_file="../.env.local")
+
 @lru_cache()
-def get_settings():
-    return Settings()
+def get_global_settings():
+    return GlobalSettings(), LocalSettings()

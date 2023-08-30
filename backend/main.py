@@ -1,20 +1,18 @@
 import uvicorn
 from tortoise.contrib.fastapi import register_tortoise
-from typing import Annotated
 from fastapi import FastAPI, Depends, Header
 from fastapi.middleware.cors import CORSMiddleware
 from routes import auth, website
-from utility.config import get_settings, Settings
+from utility.config import get_settings
 from utility.utility import AuthUtil
 
 app = FastAPI(root_path="/api")
-
-settings: Annotated[Settings, None] = get_settings()
+global_settings, local_settings = get_settings()
 register_tortoise(
     app,
-    db_url=f"mysql://{settings.DB_USER}:{settings.DB_PW}@{settings.DOMAIN}:{settings.PORT}/{settings.DATABASE}",
+    db_url=f"mysql://{global_settings.DB_USER}:{global_settings.DB_PW}@{global_settings.DOMAIN}:{global_settings.PORT}/{global_settings.DATABASE}",
     modules={"models": ["utility.database.models"]},
-    generate_schemas=settings.GEN_SCHEMAS,
+    generate_schemas=local_settings.GEN_SCHEMAS,
 )
 
 origins = [
@@ -59,5 +57,5 @@ if __name__ == "__main__":
         host="127.0.0.1",
         port=8000,
         # DEV Settings
-        reload=settings.RELOAD,
+        reload=global_settings.RELOAD,
     )
