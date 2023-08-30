@@ -112,7 +112,7 @@ class SSOUtil:
             "client_secret": str(settings.DISCORD_SECRET),
             "grant_type": "authorization_code",
             "code": code,
-            "redirect_uri": "https://pancakepuncher.com/api/auth/user/sso",
+            "redirect_uri": "https://ptilol.com/api/auth/user/sso",
         }
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
 
