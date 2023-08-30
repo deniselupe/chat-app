@@ -1,8 +1,8 @@
 import time
 from typing import Annotated
 from utility.pydantic.models import UserLogin
-from fastapi import APIRouter, Body, Header, Response, Depends
-from fastapi.responses import RedirectResponse, HTTPException
+from fastapi import APIRouter, Body, Header, Response, Depends, HTTPException
+from fastapi.responses import RedirectResponse
 from utility.utility import AuthUtil, SSOUtil, DatabaseUtil
 
 router = APIRouter(
