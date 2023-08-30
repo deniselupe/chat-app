@@ -105,7 +105,7 @@ export default function SignInPage() {
             </div>
             <Link
                 className="w-full my-2 leading-10 tracking-wiedr text-xl text-seecho-darkblue bg-discord hover:bg-seecho-lightblue rounded-lg flex justify-center items-center"
-                href="https://ptilol.com/api/auth/signin/discord"
+                href="https://ptilol.com/api/auth/state?provider=discord&intent=signin"
                 prefetch={false}
             >
                 <DiscordIcon className="w-6 mr-4" />
