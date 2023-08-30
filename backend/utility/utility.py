@@ -74,7 +74,7 @@ class AuthUtil:
         state_id = secrets.token_urlsafe(16)
         state_cache[state_id] = (state_id, intent)
         if provider == "discord":
-            return f"https://discord.com/api/oauth2/authorize?client_id={settings.DISCORD_CLIENT_ID}&redirect_uri=https%3A%2F%2Fpancakepuncher.com%2Fapi%2Fauth%2Fuser%2Fsso&response_type=code&scope=identify%20email&state={state_id}"
+            return f"https://discord.com/api/oauth2/authorize?client_id={settings.DISCORD_CLIENT_ID}&redirect_uri=https%3A%2F%2Fptilol.com%2Fapi%2Fauth%2Fuser%2Fsso&response_type=code&scope=identify%20email&state={state_id}"
         else:
             return HTTPException(status_code=400, detail="no provider flag.")
 
@@ -112,7 +112,7 @@ class SSOUtil:
             "client_secret": str(settings.DISCORD_SECRET),
             "grant_type": "authorization_code",
             "code": code,
-            "redirect_uri": "https://pancakepuncher.com/api/auth/user/sso",
+            "redirect_uri": "https://ptilol.com/api/auth/user/sso",
         }
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
 

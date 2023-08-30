@@ -5,11 +5,8 @@ import DiscordIcon from "@/public/svgs/discord-icon.svg";
 import ShowPassword from "@/public/svgs/show-password.svg";
 import HidePassword from "@/public/svgs/hide-password.svg";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { providerURLs, createAuthState } from "@/lib/auth";
-import { ProviderType } from "@/types/auth";
 import { useState } from "react";
 
 const SignInFormSchema = z.object({
@@ -35,19 +32,12 @@ type SignInFormType = z.infer<typeof SignInFormSchema>;
 
 export default function SignInPage() {
     const [showPassword, setShowPassword] = useState(false);
-    const router = useRouter();
     const form = useForm<SignInFormType>({shouldFocusError: false, resolver: zodResolver(SignInFormSchema)});
     const { register, handleSubmit, formState } = form;
     const { errors } = formState;
 
     const onSubmit = (data: SignInFormType) => {
         console.log('SignIn Form Submitted', data);
-    };
-
-    const initiateOAuth = (provider: ProviderType) => {
-        const state = createAuthState("signin", provider);
-        const url = `${providerURLs[provider]}&state=${state}`;
-        return router.push(url);
     };
 
     const handleShowPassword = () => {
@@ -113,14 +103,14 @@ export default function SignInPage() {
                 <p className="w-16 h-8 text-seecho-gold flex justify-center items-center border border-seecho-orange rounded-lg">OR</p>
                 <hr className="w-1/2 border-top border-seecho-orange" />
             </div>
-            <button
+            <Link
                 className="w-full my-2 leading-10 tracking-wiedr text-xl text-seecho-darkblue bg-discord hover:bg-seecho-lightblue rounded-lg flex justify-center items-center"
-                onClick={() => initiateOAuth("discord")}
-                type="button"
+                href="https://ptilol.com/api/auth/state?provider=discord&intent=signin"
+                prefetch={false}
             >
                 <DiscordIcon className="w-6 mr-4" />
                 <p>Sign in with Discord</p>
-            </button>
+            </Link>
         </main>
     );
 }
