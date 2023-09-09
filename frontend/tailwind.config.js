@@ -17,8 +17,11 @@
           "gold": "#FFBF69",
           "orange": "#FF9F1C",
           "darkblue": "#01040A",
-          "lightblue": "#2EC4B6"
-        }, 
+          "lightblue": "#2EC4B6",
+          "black": "#1B1B1B",
+          "darkgrey": "#2F2F2F",
+          "lightgrey": "#464545"
+        },
         "discord": "#5865F2",
       }
     },
