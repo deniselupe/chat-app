@@ -21,7 +21,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     };
 
     return (
-        <main className="mx-auto fixed left-0 right-0 top-0 bottom-0">
+        <main className="mx-auto fixed left-0 right-0 top-0 bottom-0 bg-seecho-black">
             <Backdrop open={open} onClick={closeSidebar} />
             <ChatSidebar open={open} onClick={toggleSidebar} />
             <div className="py-4 px-4">
