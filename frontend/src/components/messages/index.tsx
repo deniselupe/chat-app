@@ -1,10 +1,24 @@
+"use client";
+
 import UserMessage from "@/components/user-message";
 import SeechoMessage from "@/components/seecho-message";
 import ChatInput from "@/components/chat-input";
+import { useRef, useEffect } from "react";
 
 export default function Messages() {
+    const scrollJump = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (scrollJump.current) {
+            scrollJump.current.scroll({
+                top: scrollJump.current.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+    }, []);
+
     return (
-        <div className="overflow-x-hidden overflow-y-auto h-1/2 lg:w-1/2 lg:h-full">
+        <div className="overflow-x-hidden overflow-y-auto h-1/2 lg:w-1/2 lg:h-full" ref={scrollJump}>
             <UserMessage contd={false}>
                 Hello Seecho!
             </UserMessage>
