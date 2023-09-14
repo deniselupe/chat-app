@@ -42,6 +42,5 @@ export default function ChatInput() {
                 </button>
             </div>
         </div>
-
     );
 }
