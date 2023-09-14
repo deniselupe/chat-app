@@ -5,52 +5,54 @@ import ChatInput from "@/components/chat-input";
 export default function Messages() {
     return (
         <div className="overflow-y-auto lg:w-1/2 h-1/2 lg:h-full">
-            <UserMessage>
+            <UserMessage contd={false}>
                 Hello Seecho!
             </UserMessage>
-            <UserMessage>
+            <UserMessage contd={true}>
                 What makes a Cookie parameter in FastAPI? How do I know if I'm passing a cookie parameter when sending a request?
             </UserMessage>
-            <UserMessage>
+            <UserMessage contd={true}>
                 What's the difference between a session and a cookie?
             </UserMessage>
-            <UserMessage>
+            <UserMessage contd={true}>
                 What exactly is a session? How is it different from token authentication?
 
                 Also, can you use tokens to create a session? Is session in this context the same?
             </UserMessage>
-            <SeechoMessage>
+            <SeechoMessage contd={false}>
                 Hello Denise!
             </SeechoMessage>
-            <SeechoMessage>
+            <SeechoMessage contd={true}>
                 A random message will go here.
             </SeechoMessage>
-            <SeechoMessage>
-                In FastAPI, a cookie parameter is a type of parameter that can be defined in your API route
+            <SeechoMessage contd={true}>
+                In FastAPI,      a cookie parameter is a type of 
+                
+                parameter that can be defined in your API route
                 function to receive values from cookies sent in an HTTP request. Cookies are small pieces of
                 data stored by a web browser and sent back to the server with each subsequent request.
             </SeechoMessage>
-            <UserMessage>
+            <UserMessage contd={false}>
                 Hello Seecho!
             </UserMessage>
-            <UserMessage>
+            <UserMessage contd={true}>
                 What makes a Cookie parameter in FastAPI? How do I know if I'm passing a cookie parameter when sending a request?
             </UserMessage>
-            <UserMessage>
+            <UserMessage contd={true}>
                 What's the difference between a session and a cookie?
             </UserMessage>
-            <UserMessage>
+            <UserMessage contd={true}>
                 What exactly is a session? How is it different from token authentication?
 
                 Also, can you use tokens to create a session? Is session in this context the same?
             </UserMessage>
-            <SeechoMessage>
+            <SeechoMessage contd={false}>
                 Hello Denise!
             </SeechoMessage>
-            <SeechoMessage>
+            <SeechoMessage contd={true}>
                 A random message will go here.
             </SeechoMessage>
-            <SeechoMessage>
+            <SeechoMessage contd={true}>
                 In FastAPI, a cookie parameter is a type of parameter that can be defined in your API route
                 function to receive values from cookies sent in an HTTP request. Cookies are small pieces of
                 data stored by a web browser and sent back to the server with each subsequent request.
