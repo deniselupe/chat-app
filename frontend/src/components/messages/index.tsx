@@ -4,7 +4,7 @@ import ChatInput from "@/components/chat-input";
 
 export default function Messages() {
     return (
-        <div className="overflow-y-auto lg:w-1/2 h-1/2 lg:h-full">
+        <div className="overflow-x-hidden overflow-y-auto h-1/2 lg:w-1/2 lg:h-full">
             <UserMessage contd={false}>
                 Hello Seecho!
             </UserMessage>
