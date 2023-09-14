@@ -5,10 +5,10 @@ type SeechoMessageType = {
 
 export default function SeechoMessage({ children, contd }: SeechoMessageType) {
     return (
-        <div className={`text-white w-full h-fit px-4 ${!!contd ? 'mt-1' : 'mt-6'} mb-2 flex flex-col items-end`}>
+        <div className={`w-full h-fit px-4 ${!!contd ? 'mt-1' : 'mt-6'} mb-2 flex flex-col items-end`}>
             <div className="pl-11">
-                {!contd && <p className="text-sm text-right mb-1">Seecho</p>}
-                <div className="text-md py-2 px-8 w-fit h-fit bg-seecho-lightgreen/70 rounded-tl-full rounded-bl-full rounded-br-full">
+                {!contd && <p className="text-sm text-white text-right mb-1">Seecho</p>}
+                <div className="relative px-4 py-2 mr-4 text-md bg-seecho-lightgreen rounded-tl-2xl rounded-bl-2xl rounded-br-2xl before:absolute before:w-10 before:h-4 before:border before:border-transparent before:top-0 before:-right-10 before:rounded-tl-2xl before:shadow-seecho-bubble">
                     {children}
                 </div>
             </div>
