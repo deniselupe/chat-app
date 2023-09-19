@@ -25,8 +25,8 @@
         "discord": "#5865F2",
       },
       boxShadow: {
-        'seecho-bubble': '-14px 0 0 0 #2DC43D',
-        'user-bubble': '14px 0 0 0 #FFBF69',
+        'user-bubble': '-14px 0 0 0 #2DC43D',
+        'seecho-bubble': '14px 0 0 0 #FFBF69',
       },
     },
   },
