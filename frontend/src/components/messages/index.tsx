@@ -18,7 +18,7 @@ export default function Messages() {
     }, []);
 
     return (
-        <div className="overflow-x-hidden overflow-y-auto h-1/2 lg:w-1/2 lg:h-full" ref={scrollJump}>
+        <div id="messages" className="overflow-x-hidden overflow-y-auto h-1/2 lg:w-1/2 lg:h-full" ref={scrollJump}>
             <UserMessage contd={false}>
                 Hello Seecho!
             </UserMessage>

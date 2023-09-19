@@ -6,6 +6,10 @@ html {
     background-size: 200% 200%;
 }
 
+#messages::-webkit-scrollbar {
+    display: none;
+}
+
 ::-webkit-scrollbar {
     width: 0.25rem;
     height: 0.25rem;
