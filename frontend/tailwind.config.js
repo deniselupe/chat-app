@@ -23,6 +23,15 @@
           "lightgrey": "#464545"
         },
         "discord": "#5865F2",
+        "custom": {
+          "midnight7": "#252933",
+          "midnight6": "#31363E",
+          "midnight5": "#3D4249",
+          "midnight4": "#494F55",
+          "midnight3": "#555B60",
+          "midnight2": "#61686B",
+          "midnight1": "#6D7476",
+        },
       },
       boxShadow: {
         'user-bubble': '-14px 0 0 0 #2DC43D',
