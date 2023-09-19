@@ -15,6 +15,9 @@ export default async function Chat({ params }: ChatProps) {
         notFound();
     }
 
+    const messagesResponse = await fetch("https://jsonplaceholder.typicode.com/posts/");
+    const messages = await messagesResponse.json();
+
     return (
         <div className="absolute w-full h-full flex flex-col-reverse lg:flex-row">
             <Messages />
