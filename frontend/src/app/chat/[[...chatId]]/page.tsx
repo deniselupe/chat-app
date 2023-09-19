@@ -20,7 +20,7 @@ export default async function Chat({ params }: ChatProps) {
 
     return (
         <div className="absolute w-full h-full flex flex-col-reverse lg:flex-row">
-            <Messages />
+            <Messages messages={messages} />
             <SeechoInteraction />
         </div>
     );
