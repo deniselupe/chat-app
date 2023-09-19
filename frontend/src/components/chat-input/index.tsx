@@ -30,13 +30,25 @@ export default function ChatInput({ sendMessage }: ChatInputProps) {
         setInput(val);
     };
 
-    const handleSendMessage = () => {
-        if (!input) {
+    const handleClickSend = () => {
+        if (!input || input.trim().length === 0) {
             return;
         }
 
         sendMessage(input);
         setInput("");
+    };
+
+    const handleKeySend = (evt: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (!input || input.trim().length === 0) {
+            return;
+        }
+        
+        if (evt.key === "Enter" && !evt.shiftKey) {
+            evt.preventDefault();
+            sendMessage(input);
+            setInput("");
+        }
     };
 
     return (
@@ -47,9 +59,10 @@ export default function ChatInput({ sendMessage }: ChatInputProps) {
                 rows={1}
                 ref={textAreaRef}
                 onChange={handleInput}
+                onKeyDown={handleKeySend}
                 value={input}
             />
-            <button className="absolute right-4 bottom-4 bg-seecho-gold rounded" onClick={handleSendMessage}>
+            <button className="absolute right-4 bottom-4 bg-seecho-gold rounded" onClick={handleClickSend}>
                 Send
             </button>
         </div>
