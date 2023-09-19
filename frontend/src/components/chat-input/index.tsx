@@ -2,7 +2,11 @@
 
 import { useRef, useState, useEffect } from "react";
 
-export default function ChatInput() {
+type ChatInputProps = {
+    sendMessage: (messageText: string) => void;
+};
+
+export default function ChatInput({ sendMessage }: ChatInputProps) {
     const [input, setInput] = useState("");
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -26,6 +30,15 @@ export default function ChatInput() {
         setInput(val);
     };
 
+    const handleSendMessage = () => {
+        if (!input) {
+            return;
+        }
+
+        sendMessage(input);
+        setInput("");
+    };
+
     return (
         <div className="relative flex items-center p-2 mx-4 rounded-md bg-seecho-darkgrey">
             <textarea
@@ -36,7 +49,7 @@ export default function ChatInput() {
                 onChange={handleInput}
                 value={input}
             />
-            <button className="absolute right-4 bottom-4 bg-seecho-gold rounded">
+            <button className="absolute right-4 bottom-4 bg-seecho-gold rounded" onClick={handleSendMessage}>
                 Send
             </button>
         </div>
