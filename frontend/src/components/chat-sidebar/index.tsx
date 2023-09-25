@@ -33,6 +33,13 @@ export default function ChatSidebar({ open, onClick }: ChatSidebarType) {
                     </ul>
                 </div>
             </div>
+            {
+                !open
+                &&
+                <div className="fixed top-0 left-0 px-4 py-4 w-fit z-20">
+                    <SidebarToggle onClick={onClick} />
+                </div>
+            }
         </>
     );
 }

@@ -5,5 +5,5 @@ type SidebarToggleType = {
 };
 
 export default function SidebarToggle({ onClick }: SidebarToggleType) {
-    return <MenuIcon onClick={onClick} className="w-8 text-seecho-gold hover:text-seecho-lightblue hover:bg-white hover:bg-opacity-10 rounded" />;
+    return <MenuIcon onClick={onClick} className="w-8 text-seecho-gold bg-seecho-darkgrey hover:text-seecho-lightblue hover:bg-seecho-lightgrey rounded hover:cursor-pointer" />;
 }
