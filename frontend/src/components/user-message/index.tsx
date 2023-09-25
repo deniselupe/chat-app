@@ -10,6 +10,7 @@ export default function UserMessage({ children, contd }: UserMessageType) {
             <div className="relative px-4 py-2 mr-4 text-md whitespace-pre-wrap bg-seecho-lightgreen box-shadow rounded-tl-2xl rounded-bl-2xl rounded-br-2xl before:absolute before:w-10 before:h-4 before:border before:border-transparent before:top-0 before:-right-10 before:rounded-tl-2xl before:shadow-user-bubble">
                 {children}
             </div>
+            <h3 className="text-white text-xs px-4 py-2">4:56 PM CDT</h3>
         </div>
     );
 }
