@@ -24,7 +24,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         <main className="mx-auto w-screen h-screen bg-seecho-black">
             <Backdrop open={open} onClick={closeSidebar} />
             <ChatSidebar open={open} onClick={toggleSidebar} />
-            <aside className={`relative h-full transition-all duration-500 ease-in-out ${open ? 'md:ml-64' : 'md:ml-0'}`}>
+            <aside className={`h-full transition-all duration-500 ease-in-out ${open ? 'md:ml-64' : 'md:ml-0'}`}>
                 {children}
             </aside>
         </main>

@@ -32,20 +32,24 @@ export default function Messages({ messages }: MessagesProps) {
     };
 
     return (
-        <div className="h-1/2 lg:w-1/2 lg:h-full flex flex-col">
-            <div className="overflow-x-hidden flex flex-col-reverse messages">
-                <span ref={scrollDownRef} />
-                {
-                    messagesList.map((message, index) => {
-                        if (index % 2 === 0) {
-                            return <UserMessage contd={false} key={index}>{message.body}</UserMessage>;
-                        }
+        <div className="relative w-full h-1/2 lg:w-1/2 lg:h-full">
+            <div className="absolute w-full h-full overflow-x-hidden messages">
+                <div className="flex flex-col-reverse">
+                    <span ref={scrollDownRef} />
+                    {
+                        messagesList.map((message, index) => {
+                            if (index % 2 === 0) {
+                                return <UserMessage contd={false} key={index}>{message.body}</UserMessage>;
+                            }
 
-                        return <SeechoMessage contd={false} key={index}>{message.body}</SeechoMessage>;
-                    })
-                }
+                            return <SeechoMessage contd={false} key={index}>{message.body}</SeechoMessage>;
+                        })
+                    }
+                </div>
+                <div className="sticky bottom-0">
+                    <ChatInput sendMessage={sendMessage} />
+                </div>
             </div>
-            <ChatInput sendMessage={sendMessage} />
         </div>
     );
 }
