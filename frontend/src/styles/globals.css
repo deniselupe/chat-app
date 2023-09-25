@@ -5,3 +5,33 @@
 html {
     background-size: 200% 200%;
 }
+
+.messages::-webkit-scrollbar {
+    display: none;
+}
+
+::-webkit-scrollbar {
+    width: 0.25rem;
+    height: 0.25rem;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 0.25rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.box-shadow {
+    box-shadow: 0px 8px 6px -6px #000;
+}
+
+.text-shadow {
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+}
