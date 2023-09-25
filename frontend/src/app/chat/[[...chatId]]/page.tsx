@@ -20,8 +20,8 @@ export default async function Chat({ params }: ChatProps) {
 
     return (
         <div className="w-full h-full flex flex-col">
-            <h1 className="text-white text-3xl text-center py-4 border-b-2 border-seecho-darkgrey">
-                The Subject of Conversation
+            <h1 className="text-white text-2xl text-center py-4 border-b-2 border-seecho-darkgrey">
+                Subject of Conversation
             </h1>
             <div className="h-full flex flex-col-reverse lg:flex-row">
                 <Messages messages={messages} />

@@ -3,6 +3,7 @@
 import UserMessage from "@/components/user-message";
 import SeechoMessage from "@/components/seecho-message";
 import ChatInput from "@/components/chat-input";
+import Timestamp from "@/components/timestamp";
 import { useState, useRef, useEffect } from "react";
 import { Message } from "@/types/messages";
 
@@ -38,6 +39,15 @@ export default function Messages({ messages }: MessagesProps) {
                     <span ref={scrollDownRef} />
                     {
                         messagesList.map((message, index) => {
+                            if (index % 6 === 0) {
+                                return (
+                                    <>
+                                        <UserMessage contd={false} key={index}>{message.body}</UserMessage>
+                                        <Timestamp>September 25, 2023</Timestamp>
+                                    </>
+                                )
+                            }
+
                             if (index % 2 === 0) {
                                 return <UserMessage contd={false} key={index}>{message.body}</UserMessage>;
                             }
