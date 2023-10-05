@@ -41,18 +41,24 @@ export default function Messages({ messages }: MessagesProps) {
                         messagesList.map((message, index) => {
                             if (index % 6 === 0) {
                                 return (
-                                    <>
-                                        <UserMessage contd={false} key={index}>{message.body}</UserMessage>
+                                    <div key={message.id}>
+                                        {
+                                            index % 2 === 0
+                                            ?
+                                            <UserMessage contd={false}>{message.body}</UserMessage>
+                                            :
+                                            <SeechoMessage contd={false}>{message.body}</SeechoMessage>
+                                        }
                                         <Timestamp>September 25, 2023</Timestamp>
-                                    </>
+                                    </div>
                                 )
+                            } else {
+                                if (index % 2 === 0) {
+                                    return <UserMessage contd={false} key={message.id}>{message.body}</UserMessage>;
+                                } else {
+                                    return <SeechoMessage contd={false} key={message.id}>{message.body}</SeechoMessage>;
+                                }
                             }
-
-                            if (index % 2 === 0) {
-                                return <UserMessage contd={false} key={index}>{message.body}</UserMessage>;
-                            }
-
-                            return <SeechoMessage contd={false} key={index}>{message.body}</SeechoMessage>;
                         })
                     }
                 </div>
