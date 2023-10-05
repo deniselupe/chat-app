@@ -23,9 +23,9 @@ export default function Messages({ messages }: MessagesProps) {
 
     const sendMessage = (messageText: string) => {
         const newMessage = {
-            "userId": messagesList.length,
-            "id": messagesList.length,
-            "title": `Title for Message #${messagesList.length}`,
+            "userId": messagesList.length + 1,
+            "id": messagesList.length + 1,
+            "title": `Title for Message #${messagesList.length + 1}`,
             "body": messageText,
         };
 

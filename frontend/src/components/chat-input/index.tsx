@@ -26,7 +26,6 @@ export default function ChatInput({ sendMessage }: ChatInputProps) {
 
     const handleInput = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
         const val = evt.target?.value;
-        console.log(val);
         setInput(val);
     };
 
