@@ -6,14 +6,35 @@ import ChatInput from "@/components/chat-input";
 import Timestamp from "@/components/timestamp";
 import { useState, useRef, useEffect } from "react";
 import { Message } from "@/types/messages";
+import { io } from "socket.io-client";
 
 type MessagesProps = {
     messages: Message[];
 };
 
+const socket = io("http://localhost:8000", {
+    autoConnect: false,
+});
+
 export default function Messages({ messages }: MessagesProps) {
     const [messagesList, setMessagesList] = useState(messages);
     const scrollDownRef = useRef<HTMLSpanElement | null>(null);
+
+    console.log("messagesList", messagesList);
+
+    useEffect(() => {
+        socket.connect();
+
+        const messageHandler = (message: Message) => {
+            setMessagesList((prev) => [message, ...prev]);
+        };
+
+        socket.on("incoming-message", messageHandler);
+
+        return () => {
+            socket.disconnect();
+        };
+    }, []);
 
     useEffect(() => {
         if (scrollDownRef.current) {
@@ -29,7 +50,7 @@ export default function Messages({ messages }: MessagesProps) {
             "body": messageText,
         };
 
-        setMessagesList((prev) => [newMessage, ...prev]);
+        socket.emit("new-message", newMessage);
     };
 
     return (
