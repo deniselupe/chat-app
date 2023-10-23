@@ -8,4 +8,4 @@
 
 # env files
 .env*
-/types/environment.d.ts
+./src/types/environment.d.ts
