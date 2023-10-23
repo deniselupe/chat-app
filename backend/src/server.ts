@@ -32,6 +32,17 @@ app.get("/auth/user", async (req: Request, res: Response) => {
 
             const oAuthData = await tokenResponse.json();
             console.log(oAuthData);
+
+            const tokenType = oAuthData.token_type;
+            const accessToken = oAuthData.access_token;
+
+            const userResult = await fetch("https://discord.com/api/users/@me", {
+                headers: { authorization: `${tokenType} ${accessToken}` },
+            });
+
+            const userResultData = await userResult.json();
+
+            console.log(userResultData);
         } catch (error) {
             console.error(error);
         }
