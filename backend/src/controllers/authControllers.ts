@@ -1,4 +1,23 @@
 import { Request, Response } from "express";
+import uniqid from "uniqid";
+
+export const sendToAuth = async (req: Request, res: Response) => {
+    const stateExists = !!req.session.oAuthState;
+
+    if (stateExists) {
+        delete req.session.oAuthState;
+    }
+
+    const now = new Date().getTime();
+    const expiration = now + (10 * 60 * 1000);
+    const state = uniqid();
+    const stateObj = {state, expiration};
+    console.log(stateObj);
+    req.session.oAuthState = JSON.stringify(stateObj);
+
+    const discordAuthUrl = `${process.env.DISCORD_URL}&state=${state}`;
+    res.redirect(discordAuthUrl);
+};
 
 export const getUserData = async (req: Request, res: Response) => {
     const code = typeof(req.query.code) === "string" ? req.query.code : '';
