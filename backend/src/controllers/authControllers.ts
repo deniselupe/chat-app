@@ -12,19 +12,51 @@ export const sendToAuth = async (req: Request, res: Response) => {
     const expiration = now + (10 * 60 * 1000);
     const state = uniqid();
     const stateObj = {state, expiration};
-    console.log(stateObj);
-    req.session.oAuthState = JSON.stringify(stateObj);
-
     const discordAuthUrl = `${process.env.DISCORD_URL}&state=${state}`;
+
+    req.session.oAuthState = JSON.stringify(stateObj);
     res.redirect(discordAuthUrl);
 };
 
 export const getUserData = async (req: Request, res: Response) => {
-    const code = typeof(req.query.code) === "string" ? req.query.code : '';
+    const code = req.query.code as string;
+    const state = req.query.state as string;
+    const oAuthState = req.session.oAuthState;
+
+    console.log("Code: ", code);
+    console.log("State: ", state);
+    console.log("oAuthState: ", oAuthState);
 
     if (!code) {
-        console.log("No code is present. Please sign-in again.");
+        console.log("There is no authorization grant code. Please sign-in again.");
         res.redirect("https://ptilol.com/");
+    }
+
+    if (!state) {
+        console.log("There is no state. Please sign-in again.");
+        res.redirect("https://ptilol.com/");
+    }
+    
+    if (!oAuthState) {
+        console.log("There is no oAuthState object. Please sign-in again.");
+        res.redirect("https://ptilol.com/");
+    } else {
+        const authStateJSON = JSON.parse(oAuthState);
+        const origState = authStateJSON.state;
+        const expiration = authStateJSON.expiration;
+        const now = new Date().getTime();
+    
+        if (now > expiration) {
+            console.log("Your state is past expiration! Please sign-in again.");
+            res.redirect("https://ptilol.com/");
+        }
+    
+        if (origState !== state) {
+            console.log("The state does not match. Please sign-in again.");
+            res.redirect("https://ptilol.com/");
+        }
+    
+        delete req.session.oAuthState;
     }
 
     try {
@@ -34,6 +66,7 @@ export const getUserData = async (req: Request, res: Response) => {
         console.error(error);
     }
 
+    console.log(req.session);
     res.send("Check the logs for Auth Results");
 };
 
