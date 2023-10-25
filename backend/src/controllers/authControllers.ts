@@ -42,10 +42,10 @@ export const getUserData = async (req: Request, res: Response) => {
         res.redirect("https://ptilol.com/");
     } else {
         const origState = oAuthState.state;
-        const expiration = oAuthState.expiration;
+        const stateExpiration = oAuthState.expiration;
         const now = new Date().getTime();
     
-        if (now > expiration) {
+        if (now > stateExpiration) {
             console.log("Your state is past expiration! Please sign-in again.");
             res.redirect("https://ptilol.com/");
         }
