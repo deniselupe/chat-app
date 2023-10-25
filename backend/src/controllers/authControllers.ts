@@ -14,7 +14,7 @@ export const sendToAuth = async (req: Request, res: Response) => {
     const stateObj = {state, expiration};
     const discordAuthUrl = `${process.env.DISCORD_URL}&state=${state}`;
 
-    req.session.oAuthState = JSON.stringify(stateObj);
+    req.session.oAuthState = stateObj;
     res.redirect(discordAuthUrl);
 };
 
@@ -41,9 +41,8 @@ export const getUserData = async (req: Request, res: Response) => {
         console.log("There is no oAuthState object. Please sign-in again.");
         res.redirect("https://ptilol.com/");
     } else {
-        const authStateJSON = JSON.parse(oAuthState);
-        const origState = authStateJSON.state;
-        const expiration = authStateJSON.expiration;
+        const origState = oAuthState.state;
+        const expiration = oAuthState.expiration;
         const now = new Date().getTime();
     
         if (now > expiration) {
