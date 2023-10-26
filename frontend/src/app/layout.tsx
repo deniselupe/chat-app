@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 import React from "react";
 import NavBar from "@/components/navbar";
 import { Outfit } from "next/font/google";
-import { SessionProvider } from "@/contexts/SessionContext";
+import { SessionProvider } from "@/contexts/session";
 
 const outfit = Outfit({ weight: ["300", "400", "700"], subsets: ["latin"] });
 const outfitClassName = outfit.className;

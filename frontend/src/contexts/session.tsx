@@ -5,7 +5,7 @@ import { SessionType, SessionContextType, SessionProviderProps } from "@/types/s
 
 const SessionContext = createContext({} as SessionContextType);
 
-export const SessionProvider = ({ children }: SessionProviderProps) => {
+export function SessionProvider ({ children }: SessionProviderProps) {
     const [session, setSession] = useState<SessionType | null>(null);
 
     const fetchSession = async () => {
@@ -43,4 +43,4 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
     );
 };
 
-export const useSessionContext = useContext(SessionContext);
+export const useSessionContext = () => useContext(SessionContext);
