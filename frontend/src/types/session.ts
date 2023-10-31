@@ -1,13 +1,13 @@
-export type SessionType = {
-    name: string;
-    email: string;
-    id: string;
+export type SessionObjType = {
+    username: string;
 };
 
+export type SessionType = SessionObjType | null;
+
 export type SessionContextType = {
-    fetchSession: () => void;
+    useSession: () => SessionType;
     validateSession: () => void;
-    clearSession: () => void;
+    closeSession: () => void;
 };
 
 export type SessionProviderProps = {
