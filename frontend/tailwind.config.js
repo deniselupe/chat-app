@@ -24,13 +24,10 @@
         },
         "discord": "#5865F2",
         "custom": {
-          "midnight7": "#252933",
-          "midnight6": "#31363E",
-          "midnight5": "#3D4249",
-          "midnight4": "#494F55",
-          "midnight3": "#555B60",
-          "midnight2": "#61686B",
-          "midnight1": "#6D7476",
+          "lightpink": "#ffc9dc",
+          "darkpink": "#ff80a0",
+          "purple": "#5e5fab",
+          "tan": "#eed29c"
         },
       },
       boxShadow: {
