@@ -1,5 +1,4 @@
 import React from "react";
-import NavBar from "@/components/navbar";
 import "@/styles/globals.css";
 import { Outfit } from "next/font/google";
 import { SessionProvider } from "@/contexts/session";
@@ -19,10 +18,9 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" className={`${outfitClassName} h-screen w-screen bg-custom-purple`}>
+    <html lang="en" className={`${outfitClassName} bg-custom-purple`}>
       <body className="tracking-wide">
         <SessionProvider>
-          <NavBar />
           {children}
         </SessionProvider>
       </body>
