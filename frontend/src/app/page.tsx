@@ -1,11 +1,12 @@
 import NavBar from "@/components/navbar";
+import Footer from "@/components/footer";
 import HomepageBunnies from "@/public/svgs/homepage-bunnies.svg";
 
 export default function HomePage() {
   return (
-    <main className="w-5/6 md:w-3/4 md:h-screen mx-auto flex flex-col">
+    <main className="w-5/6 md:w-3/4 md:h-screen mx-auto flex flex-col justify-between">
       <NavBar />
-      <section className="md:pt-14 md:pb-10 flex-1">
+      <section className="md:pt-14 mb-4 flex-1">
         <div className="w-full h-full flex flex-col md:flex-row md:justify-between md:items-start lg:items-center animate-fade">
           <div id="left" className="pb-10 md:mr-4 max-w-[400px] text-custom-tan drop-shadow-text">
             <h1 className="mb-6 text-6xl font-bold">
@@ -36,6 +37,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      <Footer />
     </main>
   );
 }
