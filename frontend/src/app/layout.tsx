@@ -1,8 +1,7 @@
-import React from "react";
 import "@/styles/globals.css";
+import { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import { SessionProvider } from "@/contexts/session";
-import { Metadata } from "next";
 
 const outfit = Outfit({ weight: ["300", "400", "700"], subsets: ["latin"] });
 const outfitClassName = outfit.className;
