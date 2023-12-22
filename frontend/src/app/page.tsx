@@ -1,15 +1,22 @@
 import NavBar from "@/components/navbar";
+import HomepageBunnies from "@/public/svgs/homepage-bunnies.svg";
 
 export default function HomePage() {
   return (
-    <main className="w-5/6 lg:w-3/4 h-dvh mx-auto flex flex-col overflow-hidden">
+    <main className="w-5/6 md:w-3/4 md:h-screen mx-auto flex flex-col">
       <NavBar />
-      <section className="flex-1 md:flex md:flex-row">
-        <aside className="h-1/2 md:w-1/2 md:h-full flex items-center border">
-          <div className="max-w-[400px] text-custom-tan drop-shadow-xl">
-            <h1 className="text-6xl font-bold">Chat from anywhere, anytime.</h1>
-            <h3 className="mt-4 text-xl font-light">Fast, easy, free.</h3>
-            <div className="mt-8 text-sm">
+      <section className="md:pt-14 md:pb-10 flex-1">
+        <div className="w-full h-full flex flex-col md:flex-row md:justify-between md:items-start lg:items-center">
+          <div id="left" className="pb-10 md:mr-4 max-w-[400px] text-custom-tan drop-shadow-text">
+            <h1 className="mb-6 text-6xl font-bold">
+              Chat from 
+              <br />
+              anywhere, 
+              <br />
+              anytime.
+            </h1>
+            <p className="mb-8 text-xl font-light">Fast, easy, free.</p>
+            <div className="text-sm">
               <button 
                 type="button"
                 className="py-2.5 px-4 mr-4 text-black bg-custom-tan border border-custom-tan rounded-full hover:text-custom-tan hover:bg-transparent"
@@ -24,10 +31,10 @@ export default function HomePage() {
               </button>
             </div>
           </div>
-        </aside>
-        <aside className="h-1/2 md:w-1/2 md:h-full border">
-          right
-        </aside>
+          <div id="right" className="md:w-1/2">
+            <HomepageBunnies className="w-11/12" />
+          </div>
+        </div>
       </section>
     </main>
   );

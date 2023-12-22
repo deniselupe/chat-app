@@ -34,6 +34,9 @@
         'user-bubble': '-14px 0 0 0 #2DC43D',
         'seecho-bubble': '14px 0 0 0 #FFBF69',
       },
+      dropShadow: {
+        "text": "9px 5px rgba(0,0,0,0.6)",
+      },
     },
   },
   plugins: [],
