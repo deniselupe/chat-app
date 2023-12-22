@@ -6,7 +6,7 @@ export default function HomePage() {
     <main className="w-5/6 md:w-3/4 md:h-screen mx-auto flex flex-col">
       <NavBar />
       <section className="md:pt-14 md:pb-10 flex-1">
-        <div className="w-full h-full flex flex-col md:flex-row md:justify-between md:items-start lg:items-center">
+        <div className="w-full h-full flex flex-col md:flex-row md:justify-between md:items-start lg:items-center animate-fade">
           <div id="left" className="pb-10 md:mr-4 max-w-[400px] text-custom-tan drop-shadow-text">
             <h1 className="mb-6 text-6xl font-bold">
               Chat from 
@@ -31,7 +31,7 @@ export default function HomePage() {
               </button>
             </div>
           </div>
-          <div id="right" className="md:w-1/2">
+          <div id="right" className="md:w-1/2 animate-fade">
             <HomepageBunnies className="w-11/12" />
           </div>
         </div>

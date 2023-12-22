@@ -37,6 +37,21 @@
       dropShadow: {
         "text": "9px 5px rgba(0,0,0,0.6)",
       },
+      keyframes: {
+        fade: {
+          "0%": {
+            opacity: "0",
+            transform: "translate(0, 20px)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translate(0)",
+          },
+        },
+      },
+      animation: {
+        fade: "fade 1s"
+      },
     },
   },
   plugins: [],
