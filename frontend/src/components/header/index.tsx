@@ -1,6 +1,6 @@
 import Logo from "@/public/svgs/chat-app-logo.svg";
 
-export default function NavBar() {
+export default function Header() {
     return (
         <header className="my-6 flex items-center text-xl">
             <h1 className="w-24 text-center">
