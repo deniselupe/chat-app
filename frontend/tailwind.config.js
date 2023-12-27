@@ -36,6 +36,7 @@
       },
       dropShadow: {
         "text": "9px 5px rgba(0,0,0,0.6)",
+        "nav": "3px 5px rgba(0,0,0,0.3)",
       },
       keyframes: {
         fade: {
@@ -50,7 +51,7 @@
         },
       },
       animation: {
-        fade: "fade 1s"
+        fade: "fade 1s",
       },
     },
   },
