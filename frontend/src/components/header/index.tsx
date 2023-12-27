@@ -6,7 +6,7 @@ import Logo from "@/public/svgs/chat-app-logo.svg";
 import MenuIcon from "@/public/svgs/menu-icon.svg";
 
 export default function Header() {
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
 
     const handleToggle = () => {
         setOpen((prev) => !prev);
