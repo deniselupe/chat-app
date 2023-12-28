@@ -19,7 +19,7 @@ export default function Header() {
                     <div className="flex gap-5 justify-end items-center">
                         <Link href="/" className="hidden md:inline-block hover:transition hover:duration-300 hover:text-custom-yellow hover:drop-shadow-nav">Home</Link>
                         <Link href="/about" className="hidden md:inline-block hover:transition hover:duration-300 hover:text-custom-yellow hover:drop-shadow-nav">About</Link>
-                        <Link href="#" className="hidden md:inline-block hover:transition hover:duration-300 hover:text-custom-yellow hover:drop-shadow-nav">Sign in</Link>
+                        <button type="button" className="hidden md:inline-block w-20 h-9 rounded-full text-custom-purple text-md bg-white opacity-50 hover:opacity-100">Sign in</button>
                         <button type="button" className="w-10 h-10 inline-block md:hidden rounded flex flex-col justify-center items-center drop-shadow-nav" onClick={handleToggle}>
                             <div className={`w-8 h-1 my-1 rounded-full bg-white transition duration-300 opacity-100 ${open && "rotate-45 translate-y-3"}`} />
                             <div className={`w-8 h-1 my-1 rounded-full bg-white transition duration-300 ${open ? "opacity-0" : "opacity-100"}`} />
@@ -35,7 +35,7 @@ export default function Header() {
                     <ul className={`w-5/6 md:w-3/4 mx-auto border-t border-custom-yellow`}>
                         <li className="py-4 border-b border-custom-yellow hover:transition hover:duration-300 hover:text-custom-yellow hover:drop-shadow-nav">Home</li>
                         <li className="py-4 border-b border-custom-yellow hover:transition hover:duration-300 hover:text-custom-yellow hover:drop-shadow-nav">About</li>
-                        <li className="py-4">Sign in</li>
+                        <li className="py-4"><button type="button" className="w-20 h-9 rounded-full text-custom-purple bg-white opacity-50 hover:opacity-100">Sign in</button></li>
                     </ul>
                 </div>
             }

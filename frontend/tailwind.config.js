@@ -28,6 +28,7 @@
           "darkpink": "#ff80a0",
           "purple": "#5e5fab",
           "yellow": "#f4e07e",
+          "blue": "#91c8e3",
         },
       },
       boxShadow: {

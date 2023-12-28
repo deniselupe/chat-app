@@ -8,7 +8,7 @@ export default function HomePage() {
       <section className="md:pt-14 mb-4">
         <div className="w-full h-full flex flex-col md:flex-row md:justify-between md:items-start lg:items-center animate-fade">
           <div id="left" className="pb-10 md:mr-4 max-w-[400px] text-custom-yellow drop-shadow-text">
-            <h1 className="mb-6 text-6xl font-bold">
+            <h1 className="mb-4 text-6xl font-bold">
               Chat from 
               <br />
               anywhere, 
