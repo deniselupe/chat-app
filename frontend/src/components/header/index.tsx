@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import Logo from "@/public/svgs/chat-app-logo.svg";
-import MenuIcon from "@/public/svgs/menu-icon.svg";
 
 export default function Header() {
     const [open, setOpen] = useState(false);
@@ -17,11 +16,15 @@ export default function Header() {
             <div id="top-nav" className="w-5/6 md:w-3/4 mx-auto flex justify-between items-center z-10">
                 <Logo className="w-40 min-w-40" />
                 <div className="flex-1 ml-5">
-                    <div className="flex gap-5 justify-end items-center drop-shadow-nav">
+                    <div className="flex gap-5 justify-end items-center">
                         <Link href="/" className="hidden md:inline-block">Home</Link>
                         <Link href="/about" className="hidden md:inline-block">About</Link>
                         <Link href="#" className="hidden md:inline-block">Sign in</Link>
-                        <MenuIcon className="w-10 inline-block md:hidden cursor-pointer" onClick={handleToggle} />
+                        <button type="button" className="w-10 h-10 inline-block md:hidden rounded flex flex-col justify-center items-center drop-shadow-nav" onClick={handleToggle}>
+                            <div className={`w-8 h-1 my-1 rounded-full bg-white transition duration-300 opacity-100 ${open && "rotate-45 translate-y-3"}`} />
+                            <div className={`w-8 h-1 my-1 rounded-full bg-white transition duration-300 ${open ? "opacity-0" : "opacity-100"}`} />
+                            <div className={`w-8 h-1 my-1 rounded-full bg-white transition duration-300 opacity-100 ${open && "-rotate-45 -translate-y-3"}`} />
+                        </button>
                     </div>
                 </div>
             </div>
