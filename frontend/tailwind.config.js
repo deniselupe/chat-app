@@ -27,7 +27,7 @@
           "lightpink": "#ffc9dc",
           "darkpink": "#ff80a0",
           "purple": "#5e5fab",
-          "tan": "#eed29c"
+          "yellow": "#f4e07e",
         },
       },
       boxShadow: {

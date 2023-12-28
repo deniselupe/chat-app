@@ -32,9 +32,9 @@ export default function Header() {
                 open
                 &&
                 <div id="bot-nav" className="box-shadow block md:hidden">
-                    <ul className={`w-5/6 md:w-3/4 mx-auto border-t border-custom-tan`}>
-                        <li className="py-4 border-b border-custom-tan">Home</li>
-                        <li className="py-4 border-b border-custom-tan">About</li>
+                    <ul className={`w-5/6 md:w-3/4 mx-auto border-t border-custom-yellow`}>
+                        <li className="py-4 border-b border-custom-yellow">Home</li>
+                        <li className="py-4 border-b border-custom-yellow">About</li>
                         <li className="py-4">Sign in</li>
                     </ul>
                 </div>

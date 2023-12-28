@@ -7,7 +7,7 @@ export default function HomePage() {
     <main className="w-5/6 md:w-3/4 mx-auto flex-1">
       <section className="md:pt-14 mb-4">
         <div className="w-full h-full flex flex-col md:flex-row md:justify-between md:items-start lg:items-center animate-fade">
-          <div id="left" className="pb-10 md:mr-4 max-w-[400px] text-custom-tan drop-shadow-text">
+          <div id="left" className="pb-10 md:mr-4 max-w-[400px] text-custom-yellow drop-shadow-text">
             <h1 className="mb-6 text-6xl font-bold">
               Chat from 
               <br />
@@ -19,13 +19,13 @@ export default function HomePage() {
             <div className="text-sm">
               <button 
                 type="button"
-                className="py-2.5 px-4 mr-4 text-black bg-custom-tan border border-custom-tan rounded-full hover:text-custom-tan hover:bg-transparent"
+                className="py-2.5 px-4 mr-4 text-black bg-custom-yellow border border-custom-yellow rounded-full hover:text-custom-yellow hover:bg-transparent"
               >
                 Try it Free
               </button>
               <button
                 type="button"
-                className="py-2.5 px-4 border border-custom-tan rounded-full hover:text-black hover:bg-custom-tan"
+                className="py-2.5 px-4 border border-custom-yellow rounded-full hover:text-black hover:bg-custom-yellow"
               >
                 Learn More
               </button>
