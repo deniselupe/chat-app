@@ -17,9 +17,9 @@ export default function Header() {
                 <Logo className="w-40 min-w-40" />
                 <div className="flex-1 ml-5">
                     <div className="flex gap-5 justify-end items-center">
-                        <Link href="/" className="hidden md:inline-block">Home</Link>
-                        <Link href="/about" className="hidden md:inline-block">About</Link>
-                        <Link href="#" className="hidden md:inline-block">Sign in</Link>
+                        <Link href="/" className="hidden md:inline-block hover:transition hover:duration-300 hover:text-custom-yellow hover:drop-shadow-nav">Home</Link>
+                        <Link href="/about" className="hidden md:inline-block hover:transition hover:duration-300 hover:text-custom-yellow hover:drop-shadow-nav">About</Link>
+                        <Link href="#" className="hidden md:inline-block hover:transition hover:duration-300 hover:text-custom-yellow hover:drop-shadow-nav">Sign in</Link>
                         <button type="button" className="w-10 h-10 inline-block md:hidden rounded flex flex-col justify-center items-center drop-shadow-nav" onClick={handleToggle}>
                             <div className={`w-8 h-1 my-1 rounded-full bg-white transition duration-300 opacity-100 ${open && "rotate-45 translate-y-3"}`} />
                             <div className={`w-8 h-1 my-1 rounded-full bg-white transition duration-300 ${open ? "opacity-0" : "opacity-100"}`} />
@@ -33,8 +33,8 @@ export default function Header() {
                 &&
                 <div id="bot-nav" className="box-shadow block md:hidden">
                     <ul className={`w-5/6 md:w-3/4 mx-auto border-t border-custom-yellow`}>
-                        <li className="py-4 border-b border-custom-yellow">Home</li>
-                        <li className="py-4 border-b border-custom-yellow">About</li>
+                        <li className="py-4 border-b border-custom-yellow hover:transition hover:duration-300 hover:text-custom-yellow hover:drop-shadow-nav">Home</li>
+                        <li className="py-4 border-b border-custom-yellow hover:transition hover:duration-300 hover:text-custom-yellow hover:drop-shadow-nav">About</li>
                         <li className="py-4">Sign in</li>
                     </ul>
                 </div>
